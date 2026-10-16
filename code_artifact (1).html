@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>千秋镜鉴 · 历史人物心智深度测评（专业25题版）</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN for 5-Dimensional Radar Chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ink: '#1a1917',
+            vermilion: '#b93826',
+            vermilionDark: '#8f2415',
+            gold: '#b28026',
+            goldLight: '#f7eee0',
+            bamboo: '#275840',
+            cyanTone: '#1b4b5a',
+            parchment: '#f8f5ec',
+            parchmentCard: '#fefcf8',
+            parchmentBorder: '#e6dfd1'
+          },
+          fontFamily: {
+            serif: ['"Noto Serif SC"', '"Source Han Serif SC"', '"Songti SC"', '"STSong"', '"SimSun"', 'serif'],
+            sans: ['"PingFang SC"', '"Microsoft YaHei"', '"Hiragino Sans GB"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* 已彻底移除会导致中国大陆网络卡顿超时的 Google Fonts 引用 */
+
+    body {
+      background-color: #f6f3eb;
+      background-image: 
+        radial-gradient(circle at 12% 18%, rgba(185, 56, 38, 0.032) 0%, transparent 36%),
+        radial-gradient(circle at 88% 82%, rgba(39, 88, 64, 0.032) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(178, 128, 38, 0.02) 0%, transparent 52%);
+      color: #262421;
+      font-family: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
+    }
+
+    /* Classical Seals & Accents */
+    .seal-stamp {
+      border: 1.5px solid #b93826;
+      color: #b93826;
+      padding: 1px 7px;
+      font-weight: 700;
+      border-radius: 4px;
+      display: inline-block;
+      letter-spacing: 2px;
+      font-size: 11px;
+    }
+
+    .ink-shadow {
+      border: 1px solid rgba(195, 160, 92, 0.32);
+      box-shadow: 0 10px 30px -8px rgba(35, 29, 20, 0.08);
+    }
+
+    .paper-texture {
+      background-color: #fdfbf7;
+      background-image: linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(253,251,247,0.96) 100%);
+    }
+
+    /* Option selection effects */
+    .quiz-option {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .quiz-option:hover {
+      transform: translateY(-2px);
+      border-color: #b28026;
+      background-color: #fffefb;
+      box-shadow: 0 6px 18px -4px rgba(45, 35, 20, 0.08);
+    }
+    .quiz-option.selected {
+      border-color: #b93826;
+      background-color: #fbf3f1;
+      box-shadow: 0 4px 14px -2px rgba(185, 56, 38, 0.16);
+    }
+
+    /* Gender toggle card */
+    .gender-card {
+      transition: all 0.22s ease;
+    }
+    .gender-card.active {
+      border-color: #b93826;
+      background-color: #fcf4f2;
+      box-shadow: 0 4px 16px -2px rgba(185, 56, 38, 0.18);
+    }
+
+    .fade-enter {
+      animation: fadeIn 0.32s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes inkSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .ink-spinner {
+      border: 3px solid rgba(185, 56, 38, 0.15);
+      border-top-color: #b93826;
+      border-radius: 50%;
+      animation: inkSpin 1.1s linear infinite;
+    }
+
+    @keyframes toastAnim {
+      0% { opacity: 0; transform: translate(-50%, 18px); }
+      15% { opacity: 1; transform: translate(-50%, 0); }
+      85% { opacity: 1; transform: translate(-50%, 0); }
+      100% { opacity: 0; transform: translate(-50%, -16px); }
+    }
+    .toast-active {
+      animation: toastAnim 2.6s ease forwards;
+    }
+
+    /* Passcode shake error animation */
+    @keyframes shakeAnim {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .shake {
+      animation: shakeAnim 0.35s ease;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-goldLight selection:text-ink">
+
+  <!-- TOP APP BAR -->
+  <header class="w-full border-b border-stone-200/90 bg-stone-50/95 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="showView('home')">
+        <span class="w-9 h-9 rounded-lg bg-vermilion text-white flex items-center justify-center font-black text-base shadow-sm">
+          鏡
+        </span>
+        <div>
+          <h1 class="text-base md:text-lg font-bold tracking-wider text-ink flex items-center gap-2">
+            千秋镜鉴 <span class="text-xs bg-gold/15 text-gold border border-gold/40 px-2 py-0.5 rounded font-normal font-sans">心智深度测验</span>
+          </h1>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 font-sans text-xs md:text-sm">
+        <button id="navRestartBtn" onclick="confirmRestartQuiz()" class="hidden px-3.5 py-1.5 rounded-lg border border-stone-300 hover:border-vermilion hover:text-vermilion transition">
+          <i class="fa-solid fa-rotate-left text-xs"></i> 重新测试
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 flex flex-col justify-center">
+
+    <!-- 0. PASSCODE GATE VIEW (专属密码界面，固定密码 22456) -->
+    <section id="viewPasscode" class="w-full py-10 fade-enter">
+      <div class="max-w-md mx-auto text-center space-y-6">
+        <div class="inline-flex items-center gap-2">
+          <span class="seal-stamp">密阁金匮 · 鉴印方开</span>
+        </div>
+
+        <div class="space-y-2">
+          <h2 class="text-2xl md:text-3xl font-black text-ink tracking-wide font-serif">
+            请录入通行密匙
+          </h2>
+          <p class="text-stone-500 text-xs font-sans tracking-wider">
+            千秋镜鉴深藏于阁，须持专属印信方得借镜观心
+          </p>
+        </div>
+
+        <div id="passcodeBox" class="paper-texture ink-shadow rounded-2xl p-6 md:p-8 border border-stone-200/90 font-sans space-y-5">
+          <div class="relative">
+            <input 
+              type="password" 
+              id="passcodeInput" 
+              maxlength="16"
+              placeholder="请输入5位访问秘钥" 
+              class="w-full px-4 py-3.5 text-center text-lg tracking-[0.35em] font-serif font-bold text-ink rounded-xl border border-stone-300 bg-white/90 focus:outline-none focus:ring-2 focus:ring-vermilion/50 focus:border-vermilion transition"
+              onkeydown="if(event.key==='Enter') verifyPasscode()"
+            />
+            <button 
+              type="button" 
+              onclick="togglePasscodeVisibility()" 
+              class="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 text-sm p-1 transition"
+              title="切换可见"
+            >
+              <i id="passcodeEyeIcon" class="fa-regular fa-eye-slash"></i>
+            </button>
+          </div>
+
+          <div id="passcodeErrorTip" class="text-vermilion text-xs hidden flex items-center justify-center gap-1.5 font-sans">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span>密匙有误，请重新校验输入</span>
+          </div>
+
+          <button 
+            onclick="verifyPasscode()" 
+            class="w-full py-3.5 rounded-xl bg-vermilion hover:bg-vermilionDark text-white font-bold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 tracking-widest cursor-pointer"
+          >
+            <span>验符启卷</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. HOME VIEW (封面、性别选择与测评说明) -->
+    <section id="viewHome" class="hidden w-full py-4 fade-enter">
+      <div class="max-w-2xl mx-auto text-center space-y-6">
+        
+        <div class="inline-flex items-center gap-2">
+          <span class="seal-stamp">格物致知 · 鉴往知来</span>
+          <span class="text-xs text-stone-500 font-sans tracking-widest">五维东方心智原型架构</span>
+        </div>
+
+        <div class="relative py-1">
+          <h2 class="text-3xl md:text-5xl font-black text-ink tracking-wide leading-tight">
+            历史人物心智深度测验
+          </h2>
+          <p class="mt-3 text-stone-600 text-xs md:text-sm leading-relaxed max-w-xl mx-auto font-sans">
+            极端抉择处，方显心性本色。本测评通过 <b>25 幕典型历史情境抉择</b>，解构你在<b>「智略、魄力、仁德、风骨、变通」</b>五大维度的原生心智结构，穿透岁月烟云，寻绎与你灵魂同频的先贤镜像。
+          </p>
+        </div>
+
+        <!-- Gender Selector (核心要求：首屏性别选择) -->
+        <div class="paper-texture ink-shadow rounded-2xl p-5 border border-stone-200 font-sans text-left space-y-3">
+          <div class="flex items-center justify-between border-b border-stone-200/80 pb-2">
+            <span class="text-xs font-bold text-stone-700 flex items-center gap-1.5">
+              <i class="fa-solid fa-yin-yang text-vermilion"></i> 测前校准 · 乾坤易位
+            </span>
+            <span class="text-[11px] text-stone-400">系统将依据心性偏好优先对齐历史同侪</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3.5 pt-1">
+            <!-- Male Selection -->
+            <div id="genderCardMale" onclick="selectGender('M')" class="gender-card active p-4 rounded-xl border border-stone-300 bg-white/70 cursor-pointer flex items-center gap-3 select-none">
+              <div class="w-10 h-10 rounded-lg bg-stone-100 border border-stone-300 flex items-center justify-center text-ink text-lg font-serif shrink-0">
+                乾
+              </div>
+              <div>
+                <div class="text-sm font-bold text-ink">男士 · 乾道自强</div>
+                <div class="text-[11px] text-stone-500 mt-0.5">刚健笃实，辉光日新</div>
+              </div>
+            </div>
+
+            <!-- Female Selection -->
+            <div id="genderCardFemale" onclick="selectGender('F')" class="gender-card p-4 rounded-xl border border-stone-300 bg-white/70 cursor-pointer flex items-center gap-3 select-none">
+              <div class="w-10 h-10 rounded-lg bg-stone-100 border border-stone-300 flex items-center justify-center text-ink text-lg font-serif shrink-0">
+                坤
+              </div>
+              <div>
+                <div class="text-sm font-bold text-ink">女士 · 坤厚载物</div>
+                <div class="text-[11px] text-stone-500 mt-0.5">含弘光大，品物咸亨</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Five Dimensions Preview -->
+        <div class="grid grid-cols-5 gap-2 text-center py-1 font-sans">
+          <div class="p-2.5 bg-white/70 rounded-xl border border-stone-200">
+            <div class="text-xs font-bold text-indigo-950 mb-0.5">智略</div>
+            <p class="text-[10px] text-stone-500">深谋洞察</p>
+          </div>
+          <div class="p-2.5 bg-white/70 rounded-xl border border-stone-200">
+            <div class="text-xs font-bold text-vermilion mb-0.5">魄力</div>
+            <p class="text-[10px] text-stone-500">铁腕决断</p>
+          </div>
+          <div class="p-2.5 bg-white/70 rounded-xl border border-stone-200">
+            <div class="text-xs font-bold text-bamboo mb-0.5">仁德</div>
+            <p class="text-[10px] text-stone-500">共情凝聚</p>
+          </div>
+          <div class="p-2.5 bg-white/70 rounded-xl border border-stone-200">
+            <div class="text-xs font-bold text-cyanTone mb-0.5">风骨</div>
+            <p class="text-[10px] text-stone-500">超然高洁</p>
+          </div>
+          <div class="p-2.5 bg-white/70 rounded-xl border border-stone-200">
+            <div class="text-xs font-bold text-gold mb-0.5">变通</div>
+            <p class="text-[10px] text-stone-500">务实韧性</p>
+          </div>
+        </div>
+
+        <!-- Start CTA -->
+        <div class="pt-2">
+          <button onclick="startTest()" class="px-9 py-3.5 rounded-xl bg-vermilion hover:bg-vermilionDark text-white font-bold text-base shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 tracking-widest flex items-center justify-center gap-3 mx-auto">
+            <span>正冠理服 · 开卷问策</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+          <p class="text-stone-400 text-xs mt-3 font-sans">共 25 幕重大情境推演 · 凭第一直觉作答即可</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. QUIZ VIEW (25题答题流) -->
+    <section id="viewQuiz" class="hidden w-full max-w-2xl mx-auto py-2 fade-enter">
+      
+      <!-- Top Status Header -->
+      <div class="mb-5 space-y-2 font-sans">
+        <div class="flex justify-between items-center text-xs text-stone-600">
+          <div class="flex items-center gap-2">
+            <span id="currentModuleBadge" class="bg-stone-200/80 text-stone-700 px-2.5 py-0.5 rounded font-semibold text-[11px]">
+              模块一：权谋与格局
+            </span>
+            <span class="text-stone-400">|</span>
+            <span class="text-stone-500">第 <b id="qCurrentIndex" class="text-vermilion text-sm font-serif">1</b> / 25 问</span>
+          </div>
+          <button onclick="toggleSheetModal(true)" class="text-stone-600 hover:text-vermilion transition text-xs flex items-center gap-1">
+            <i class="fa-solid fa-grip mr-0.5"></i> 答题卡 (<span id="answeredCount">0</span>/25)
+          </button>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="w-full h-1.5 bg-stone-200 rounded-full overflow-hidden">
+          <div id="quizProgressBar" class="h-full bg-vermilion transition-all duration-300 ease-out" style="width: 4%;"></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="paper-texture ink-shadow rounded-2xl p-6 md:p-8 border border-stone-200 mb-6 relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="seal-stamp text-[10px]">情境推演</span>
+            <span id="qTagText" class="text-xs text-stone-500 tracking-wider">重大战略抉择</span>
+          </div>
+          <span id="qNumberWatermark" class="text-2xl font-black text-stone-200 font-serif">01</span>
+        </div>
+
+        <h3 id="qTitleText" class="text-lg md:text-xl font-bold text-ink leading-relaxed mb-6 font-serif">
+          题目加载中...
+        </h3>
+
+        <!-- Options Container -->
+        <div id="optionsContainer" class="space-y-3 font-sans">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Footer Action Row -->
+      <div class="flex justify-between items-center px-1 font-sans">
+        <button id="prevBtn" onclick="navigateQuestion(-1)" class="text-xs md:text-sm text-stone-600 hover:text-ink px-4 py-2 rounded-lg border border-stone-300 disabled:opacity-30 disabled:pointer-events-none transition flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-left text-xs"></i> 上一题
+        </button>
+
+        <div class="flex items-center gap-2">
+          <button onclick="toggleSheetModal(true)" class="sm:hidden text-xs text-stone-500 border border-stone-300 px-3 py-2 rounded-lg">
+            答题卡
+          </button>
+          <button id="nextBtn" onclick="navigateQuestion(1)" class="text-xs md:text-sm bg-stone-800 text-stone-100 hover:bg-stone-900 px-5 py-2 rounded-lg disabled:opacity-35 disabled:cursor-not-allowed disabled:bg-stone-400 transition flex items-center gap-1.5">
+            <span>下一题</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+          <!-- 移除 disabled 属性约束，确保点击事件必然响应，并由 submitQuiz 统一调度友好提示 -->
+          <button id="submitBtn" onclick="submitQuiz()" class="hidden text-xs md:text-sm bg-vermilion text-white hover:bg-vermilionDark px-6 py-2 rounded-lg font-bold shadow-md transition flex items-center gap-1.5 cursor-pointer">
+            <span>完成评测，观镜识人</span> <i class="fa-solid fa-check text-xs"></i>
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 3. TRANSITION / CALCULATION VIEW (无人数泄露的沉浸式推演) -->
+    <section id="viewCalculating" class="hidden w-full max-w-md mx-auto py-16 text-center fade-enter font-sans">
+      <div class="w-16 h-16 mx-auto ink-spinner mb-6"></div>
+      <div class="seal-stamp mb-3">气象归拢 · 考校古今</div>
+      <h3 class="text-xl font-bold text-ink font-serif tracking-widest mb-2">
+        正在推演五维心智结构...
+      </h3>
+      <p id="calcDynamicTip" class="text-xs text-stone-500 tracking-wider">
+        比照先贤行止心径 · 衡量变通与风骨极性
+      </p>
+    </section>
+
+    <!-- 4. RESULT VIEW (深度专业评测报告) -->
+    <section id="viewResult" class="hidden w-full max-w-3xl mx-auto py-2 fade-enter">
+      
+      <!-- Exportable Personality Dossier -->
+      <div id="resultDossier" class="paper-texture ink-shadow rounded-3xl p-6 md:p-9 border border-stone-200/90 space-y-7">
+        
+        <!-- Header: Main Persona Match -->
+        <div class="text-center space-y-3 border-b border-stone-200 pb-7 relative">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-vermilion/10 text-vermilion border border-vermilion/20 text-xs font-sans">
+            <i class="fa-solid fa-compass text-[11px]"></i> 千秋镜鉴 · 原生心智镜像
+          </div>
+
+          <div class="pt-1">
+            <p id="resArchetypeTitle" class="text-xs md:text-sm font-sans tracking-widest text-gold uppercase font-semibold">
+              九天阊阖 · 巾帼提挈的铁血掌舵人
+            </p>
+            <h2 id="resCharacterName" class="text-3xl md:text-5xl font-black text-ink mt-2 tracking-wider font-serif">
+              武则天
+            </h2>
+          </div>
+
+          <p id="resQuote" class="italic text-xs md:text-base text-stone-600 max-w-xl mx-auto pt-2 font-serif">
+            “千秋功过，留待后人评说。”
+          </p>
+
+          <!-- Match percentage & Secondary Archetype -->
+          <div class="pt-2 flex flex-wrap items-center justify-center gap-2 text-xs font-sans text-stone-500">
+            <span>核心匹配契合度：<b id="resMatchScore" class="text-vermilion font-serif text-sm">96%</b></span>
+            <span>·</span>
+            <span>辅型气韵：<b id="resSecondaryName" class="text-stone-800">长孙皇后</b>（<span id="resSecondaryDesc">含弘光大</span>）</span>
+          </div>
+        </div>
+
+        <!-- 5D Radar Chart & Dimension Scores -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          
+          <!-- Radar Chart Canvas -->
+          <div class="md:col-span-7 flex justify-center items-center py-2 relative">
+            <div class="w-full max-w-[320px] h-[280px]">
+              <canvas id="radarCanvas"></canvas>
+            </div>
+          </div>
+
+          <!-- Dimension Scores Breakdown -->
+          <div class="md:col-span-5 space-y-2 font-sans text-xs">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200/80 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-indigo-950 flex items-center gap-1.5">
+                  <i class="fa-solid fa-chess-knight"></i> 智略 (Strategy)
+                </span>
+                <span class="text-[10px] text-stone-400">大局观与前瞻推演</span>
+              </div>
+              <span id="scoreDim1" class="font-bold text-base text-ink font-serif">0</span>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200/80 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-vermilion flex items-center gap-1.5">
+                  <i class="fa-solid fa-fire"></i> 魄力 (Drive)
+                </span>
+                <span class="text-[10px] text-stone-400">决断魄力与意志韧劲</span>
+              </div>
+              <span id="scoreDim2" class="font-bold text-base text-ink font-serif">0</span>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200/80 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-bamboo flex items-center gap-1.5">
+                  <i class="fa-solid fa-hand-holding-heart"></i> 仁德 (Benevolence)
+                </span>
+                <span class="text-[10px] text-stone-400">共情包容与人格磁场</span>
+              </div>
+              <span id="scoreDim3" class="font-bold text-base text-ink font-serif">0</span>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200/80 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-cyanTone flex items-center gap-1.5">
+                  <i class="fa-solid fa-feather-pointed"></i> 风骨 (Integrity)
+                </span>
+                <span class="text-[10px] text-stone-400">操守气节与超脱精神</span>
+              </div>
+              <span id="scoreDim4" class="font-bold text-base text-ink font-serif">0</span>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200/80 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-gold flex items-center gap-1.5">
+                  <i class="fa-solid fa-water"></i> 变通 (Resilience)
+                </span>
+                <span class="text-[10px] text-stone-400">务实应变与顺逆适应</span>
+              </div>
+              <span id="scoreDim5" class="font-bold text-base text-ink font-serif">0</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- In-Depth Multi-Part Analysis -->
+        <div class="space-y-4 pt-1">
+          
+          <!-- Mindset Architecture -->
+          <div class="p-4 rounded-xl bg-white/80 border border-stone-200 space-y-1.5">
+            <h4 class="text-xs font-bold text-stone-800 flex items-center gap-1.5 tracking-wider uppercase font-sans">
+              <i class="fa-solid fa-brain text-vermilion"></i> 底层心智与认知结构
+            </h4>
+            <p id="resCognitiveAnalysis" class="text-xs md:text-sm text-stone-600 leading-relaxed font-sans">
+              正在解析您的心智模型...
+            </p>
+          </div>
+
+          <!-- Strengths & Blind Spots Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 font-sans">
+            <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200/80 space-y-1">
+              <div class="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
+                <i class="fa-solid fa-shield-halved"></i> 核心天赋与竞争优势
+              </div>
+              <p id="resCoreStrengths" class="text-xs text-stone-700 leading-relaxed">
+                卓越的逆商、敏锐的大局感知...
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-200/80 space-y-1">
+              <div class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
+                <i class="fa-solid fa-triangle-exclamation"></i> 潜在人格盲区
+              </div>
+              <p id="resBlindspots" class="text-xs text-stone-700 leading-relaxed">
+                有时过于理性刚硬，在繁琐事务中容易产生内耗...
+              </p>
+            </div>
+          </div>
+
+          <!-- Modern Leadership & Career Benchmarking -->
+          <div class="p-4 rounded-xl bg-stone-900 text-stone-200 font-sans space-y-1.5">
+            <div class="flex items-center gap-2 text-goldLight text-xs font-bold">
+              <i class="fa-solid fa-briefcase"></i> 现代职场生态与角色定位
+            </div>
+            <p id="resWorkplaceBench" class="text-xs md:text-sm text-stone-300 leading-relaxed">
+              适合担任具有高度开拓性与定力的核心掌舵人...
+            </p>
+          </div>
+
+          <!-- Cultivation & Wisdom Quote -->
+          <div class="p-4 rounded-xl bg-goldLight/40 border border-gold/40 flex items-start gap-3 font-sans">
+            <span class="w-6 h-6 rounded-full bg-gold/20 text-gold flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+              箴
+            </span>
+            <div>
+              <div class="text-xs font-bold text-stone-800 mb-0.5">修身明鉴与知止锦囊</div>
+              <p id="resAdviceText" class="text-xs text-stone-600 leading-relaxed">
+                处逆境当留三分从容，处顺境当留三分戒惧。
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Action Buttons Row -->
+      <div class="mt-7 flex flex-col sm:flex-row gap-3 items-center justify-between font-sans">
+        <button onclick="confirmRestartQuiz()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-stone-400 text-xs font-semibold hover:border-ink hover:text-ink transition flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-rotate-left"></i> 重测 25 问
+        </button>
+        <button onclick="copyDetailedReport()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-vermilion hover:bg-vermilionDark text-white text-xs font-semibold shadow transition flex items-center justify-center gap-1.5">
+          <i class="fa-regular fa-clipboard"></i> 复制完整心智分析报告
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- QUESTION SHEET MODAL (答题卡) -->
+  <div id="sheetModal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-end sm:items-center justify-center transition-opacity">
+    <div class="bg-parchmentCard w-full sm:max-w-md rounded-t-3xl sm:rounded-2xl p-6 ink-shadow border border-stone-300 font-sans max-h-[85vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+        <div>
+          <h4 class="font-bold text-sm text-ink">答题卡快速跳转</h4>
+          <span class="text-[11px] text-stone-400">已完成 <span id="sheetAnsweredCount">0</span> / 25 题</span>
+        </div>
+        <button onclick="toggleSheetModal(false)" class="text-stone-400 hover:text-stone-700 text-base p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-5 gap-2.5 py-4" id="sheetGrid">
+        <!-- 25 squares dynamically populated -->
+      </div>
+
+      <div class="pt-2 text-center">
+        <button onclick="toggleSheetModal(false)" class="w-full py-2 rounded-xl bg-stone-800 text-white text-xs font-semibold">
+          关闭答题卡
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-stone-900/95 text-stone-100 text-xs md:text-sm px-5 py-2.5 rounded-full shadow-2xl backdrop-blur pointer-events-none hidden flex items-center gap-2 font-sans">
+    <i class="fa-solid fa-check text-gold"></i>
+    <span id="toastMsg">已完成操作</span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="w-full border-t border-stone-200/90 py-3.5 text-center text-xs text-stone-400 bg-stone-50 font-sans">
+    <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-1">
+      <span>千秋镜鉴 · 基于大五人格与东方心智模型的深度情境评测系统</span>
+      <span>以史为鉴，知古今之变，明进退之道</span>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    /* =========================================================================
+       1. 25 幕深度情境测评题（文辞典雅，五大模块，四维选项量化五维心理）
+       S: 智略 (Strategy), P: 魄力 (Drive), R: 仁德 (Benevolence), F: 风骨 (Integrity), B: 变通 (Resilience)
+    ========================================================================= */
+    const QUIZ_QUESTIONS = [
+      // 模块一：权谋与格局 (Q1-Q5)
+      {
+        id: 1,
+        module: "模块一：权谋与格局",
+        tag: "根基初定",
+        title: "若你初登统帅之位，四面强敌环伺，内有旧部疑虑，你将首先推行何策？",
+        options: [
+          { text: "暗中推演各方势力利害关系，深沟高垒暂不与锋，待天下生变方雷霆出击", scores: { S: 4, P: 1, R: 0, F: 1, B: 3 } },
+          { text: "以霹雳手段惩办立威，重整严刑峻法，以雷霆万钧之势慑服内外异心", scores: { S: 1, P: 5, R: 0, F: 1, B: 1 } },
+          { text: "轻徭薄赋广纳贤士，推心置腹联络诸部，以道义和仁厚博得万民归心", scores: { S: 1, P: 1, R: 5, F: 3, B: 0 } },
+          { text: "表面尊奉朝廷规制与强藩虚与委蛇，私下厉兵秣马、积聚实利以图长远", scores: { S: 3, P: 2, R: 0, F: 0, B: 5 } }
+        ]
+      },
+      {
+        id: 2,
+        module: "模块一：权谋与格局",
+        tag: "战略分歧",
+        title: "幕僚提出两条截然相反的战略路线，一方稳扎稳打但消耗巨甚，一方奇谋弄险收益极高，你会？",
+        options: [
+          { text: "建立精密沙盘反复推演胜率概率，若弄险胜算低于七成绝不孤注一掷", scores: { S: 5, P: 1, R: 1, F: 2, B: 1 } },
+          { text: "千载难逢之机不可失！亲自督军执行奇袭，承担全部成败后果", scores: { S: 1, P: 5, R: 0, F: 2, B: 2 } },
+          { text: "权衡两方骨干心绪，寻找能让团队共担共识的中间方案，避免阵营割裂", scores: { S: 1, P: 1, R: 4, F: 1, B: 4 } },
+          { text: "明修栈道示以稳扎，暗度陈仓行以偏锋，将稳与险巧妙合二为一", scores: { S: 4, P: 3, R: 0, F: 0, B: 4 } }
+        ]
+      },
+      {
+        id: 3,
+        module: "模块一：权谋与格局",
+        tag: "利益制衡",
+        title: "朝中门阀贵胄垄断进仕之途，阻碍寒门士子与新政推行，你的破局之法是？",
+        options: [
+          { text: "以铁腕下达求贤令，打破身份门第，唯才是举，不惜与旧勋贵彻底决裂", scores: { S: 2, P: 5, R: 1, F: 2, B: 1 } },
+          { text: "设立科举或开辟新考核系统，以制度法度逐渐架空旧势力，抽薪止沸", scores: { S: 5, P: 2, R: 2, F: 2, B: 1 } },
+          { text: "恩威并施，通过联姻或利益分润拉拢温和派，孤立顽固派，徐徐图之", scores: { S: 3, P: 1, R: 1, F: 0, B: 5 } },
+          { text: "大兴义学与教化，唤醒天下公理民智，形成不可逆转的道德潮流促其变革", scores: { S: 2, P: 0, R: 5, F: 5, B: 0 } }
+        ]
+      },
+      {
+        id: 4,
+        module: "模块一：权谋与格局",
+        tag: "资源分配",
+        title: "库府资金极其有限，多处均亟待拨款，你心目中的第一优先级必然是？",
+        options: [
+          { text: "投入战略情报、顶尖幕僚与核心智囊系统，胜在先机与顶层谋划", scores: { S: 5, P: 1, R: 1, F: 1, B: 2 } },
+          { text: "扩充精锐军备与先锋重器，唯有手中握有利刃，才有资格议论天下", scores: { S: 1, P: 5, R: 0, F: 0, B: 2 } },
+          { text: "赈济黎民创伤、抚恤阵亡鳏寡，得民心者方能历经百劫而不倒", scores: { S: 1, P: 0, R: 5, F: 4, B: 1 } },
+          { text: "投入兴修水利、屯田开荒与商贸枢纽，把家底做大，任凭风吹浪打", scores: { S: 3, P: 2, R: 2, F: 1, B: 4 } }
+        ]
+      },
+      {
+        id: 5,
+        module: "模块一：权谋与格局",
+        tag: "大势决择",
+        title: "天下呈现两极分立，中立小邦邀你加盟共进退，你对天下格局的根本认知是？",
+        options: [
+          { text: "世无恒强，亦无恒弱；居弱者当顺势借力，在两大强权博弈间隙谋求最大生机", scores: { S: 3, P: 1, R: 1, F: 0, B: 5 } },
+          { text: "天下之势分久必合，唯有具备一统天下的宏伟蓝图与制度，方能终结乱世", scores: { S: 4, P: 4, R: 1, F: 2, B: 0 } },
+          { text: "与其参与天下机巧争夺，不如守护一方净土，让百姓安居乐业就是至高功德", scores: { S: 1, P: 0, R: 5, F: 4, B: 1 } },
+          { text: "兵者乃大凶之器，非得已不妄动；善战者无赫赫之功，求其不败而后求胜", scores: { S: 5, P: 2, R: 2, F: 1, B: 2 } }
+        ]
+      },
+
+      // 模块二：逆境与决断 (Q6-Q10)
+      {
+        id: 6,
+        module: "模块二：逆境与决断",
+        tag: "兵败绝境",
+        title: "大军陷入重围，粮道被断，副将动摇欲降，此时你作何抉择？",
+        options: [
+          { text: "冷静排查军中细作与敌军阵型死穴，用疑兵虚张声势，觅机金蝉脱壳", scores: { S: 4, P: 1, R: 1, F: 1, B: 4 } },
+          { text: "拔剑怒斩动摇军心者，身先士卒领死士背水一战，置之死地而后生", scores: { S: 1, P: 5, R: 0, F: 3, B: 0 } },
+          { text: "分发余粮，对将士坦诚相待，誓言生死相随，以此悲壮之意激发生机", scores: { S: 1, P: 2, R: 5, F: 3, B: 0 } },
+          { text: "审时度势，佯装俯首纳降以保全火种，只要人在，十年生聚犹可复仇", scores: { S: 2, P: 1, R: 0, F: 0, B: 5 } }
+        ]
+      },
+      {
+        id: 7,
+        module: "模块二：逆境与决断",
+        tag: "蒙冤受贬",
+        title: "呕心沥血谋划变法，却因奸佞构陷被贬边荒蛮烟瘴疠之地，你初到贬所的心境是？",
+        options: [
+          { text: "「此心光明，亦复何言！」随遇而安，将荒野视作格物致知、修身讲学之道场", scores: { S: 3, P: 1, R: 3, F: 5, B: 3 } },
+          { text: "日夜研读经史地志，秘密联络京中同道，韬光养晦等待朝局翻盘之期", scores: { S: 4, P: 2, R: 0, F: 1, B: 4 } },
+          { text: "心系天下疾苦，写下千古文章刺痛麻木时局，即便粉身碎骨也不改青云之志", scores: { S: 2, P: 3, R: 4, F: 5, B: 0 } },
+          { text: "泛舟江海，吃肉吟诗，与村夫野老同乐，人生的失意在浩瀚天地间不值一提", scores: { S: 1, P: 0, R: 2, F: 4, B: 5 } }
+        ]
+      },
+      {
+        id: 8,
+        module: "模块二：逆境与决断",
+        tag: "重大掣肘",
+        title: "君王昏聩多疑，在前线频繁下达违背兵法常识的瞎指挥令，你如何应对？",
+        options: [
+          { text: "「将在外，君命有所不受。」抗旨强行依胜算开战，战后再回朝领罪任罚", scores: { S: 2, P: 5, R: 1, F: 4, B: 0 } },
+          { text: "以高超的修辞与回旋艺术，表面领旨，实则暗中调整策略达到战术目的", scores: { S: 4, P: 1, R: 1, F: 0, B: 5 } },
+          { text: "连夜修书死谏，历陈得失利害，以一腔忠赤拼死感化君王回心转意", scores: { S: 2, P: 1, R: 3, F: 5, B: 0 } },
+          { text: "精密测算抗旨与遵旨的各方损失，只打防守反击，把损失降到绝对最低", scores: { S: 5, P: 2, R: 1, F: 1, B: 2 } }
+        ]
+      },
+      {
+        id: 9,
+        module: "模块二：逆境与决断",
+        tag: "生死祸福",
+        title: "权臣设鸿门宴相邀，明知危机四伏但又不能不去，你将以何种姿态赴会？",
+        options: [
+          { text: "预留伏兵与绝命后手于城外，席间装聋作哑、巧言示弱，使对方麻痹大意", scores: { S: 4, P: 2, R: 0, F: 0, B: 5 } },
+          { text: "单刀赴会，气度威严，借理法大义在席上反客为主，在气魄上彻底压垮对方", scores: { S: 1, P: 5, R: 1, F: 4, B: 1 } },
+          { text: "广邀清流名士同往赴宴，将私人杀局置于天下清议审判之下，使其投鼠忌器", scores: { S: 5, P: 1, R: 2, F: 3, B: 2 } },
+          { text: "坦荡赴宴，视死生如梦幻泡影，倘若命绝于此亦不失男儿坦荡磊落之气", scores: { S: 0, P: 2, R: 1, F: 5, B: 3 } }
+        ]
+      },
+      {
+        id: 10,
+        module: "模块二：逆境与决断",
+        tag: "背信弃义",
+        title: "至亲或信赖的心腹为求富贵暗中出卖了你，事后被你拿获，你如何处置？",
+        options: [
+          { text: "严刑峻法不容私情，按律当众斩首，让天下人知晓背叛之沉重代价", scores: { S: 1, P: 5, R: 0, F: 3, B: 0 } },
+          { text: "闭门长叹，免其死罪废其兵权遣散江湖，念及旧日恩义不忍斩尽杀绝", scores: { S: 0, P: 0, R: 5, F: 3, B: 1 } },
+          { text: "不动声色将其转化为双面间谍，向敌方传递虚假情报，榨干其剩余价值", scores: { S: 5, P: 2, R: 0, F: 0, B: 4 } },
+          { text: "自省是否自己德薄不足以服人，放其自去，从此大道朝天各走一边", scores: { S: 2, P: 0, R: 3, F: 5, B: 2 } }
+        ]
+      },
+
+      // 模块三：人际与凝聚 (Q11-Q15)
+      {
+        id: 11,
+        module: "模块三：人际与凝聚",
+        tag: "人才鉴赏",
+        title: "当你要选拔一位独当一面的辅政栋梁，你最看重的特质是？",
+        options: [
+          { text: "能洞见未来数年局势走向的深邃谋略与缜密算力", scores: { S: 5, P: 2, R: 1, F: 1, B: 1 } },
+          { text: "百折不挠、敢打硬仗、在绝境中敢于拍板负责的钢铁手腕", scores: { S: 1, P: 5, R: 0, F: 1, B: 2 } },
+          { text: "爱民如子、严以律己、能凝聚人心的崇高品行与道德声望", scores: { S: 1, P: 0, R: 5, F: 4, B: 0 } },
+          { text: "不拘一格、通达变通、能在三教九流与复杂利益中闪转腾挪之能人", scores: { S: 2, P: 2, R: 0, F: 0, B: 5 } }
+        ]
+      },
+      {
+        id: 12,
+        module: "模块三：人际与凝聚",
+        tag: "团队磁场",
+        title: "团队中两员大将性格水火不容，常常在议事堂当众争吵，你如何平衡？",
+        options: [
+          { text: "以清晰的规章与责任清单划分职权边界，凭业绩奖赏说话，不予私情空间", scores: { S: 3, P: 4, R: 0, F: 2, B: 1 } },
+          { text: "设家宴推杯换盏，以共同理想与患难情谊感化二人，融化芥蒂", scores: { S: 0, P: 1, R: 5, F: 2, B: 2 } },
+          { text: "故意保留二人制衡格局，利用其竞争心理相互监督，掌控核心裁判权", scores: { S: 5, P: 2, R: 0, F: 0, B: 4 } },
+          { text: "分派他们负责完全不同维度的开拓业务，给足各自施展才华的旷阔天地", scores: { S: 3, P: 1, R: 2, F: 2, B: 4 } }
+        ]
+      },
+      {
+        id: 13,
+        module: "模块三：人际与凝聚",
+        tag: "交友之道",
+        title: "漫漫人生，你最渴望拥有怎样一位秉烛夜谈的平生至交？",
+        options: [
+          { text: "能与我推演天下局势、在智慧和棋局上棋逢对手的隐士智者", scores: { S: 5, P: 1, R: 1, F: 2, B: 1 } },
+          { text: "才情绝艳、纵情诗酒、敢于蔑视世俗名利的狂客逸士", scores: { S: 0, P: 1, R: 1, F: 5, B: 4 } },
+          { text: "心怀天下悲悯苍生、能共赴患难生死相托的仁人君子", scores: { S: 1, P: 2, R: 5, F: 4, B: 0 } },
+          { text: "雄心万丈、能与我一同打下万里江山、豪迈不羁的乱世雄豪", scores: { S: 2, P: 5, R: 1, F: 1, B: 2 } }
+        ]
+      },
+      {
+        id: 14,
+        module: "模块三：人际与凝聚",
+        tag: "直言进谏",
+        title: "下属当众直言不讳地指出你某项核心决策有严重逻辑缺陷，你的第一生理反应是？",
+        options: [
+          { text: "欣喜若狂！当众重赏该下属，以示我海纳百川、唯真理是从的广阔胸襟", scores: { S: 2, P: 2, R: 4, F: 5, B: 1 } },
+          { text: "大脑飞速推演其论据是否成立，若成立立刻修改，若不成立私下再复盘", scores: { S: 5, P: 2, R: 1, F: 1, B: 2 } },
+          { text: "虽然接纳建议，但内心不喜其鲁莽形式，事后提醒其注意进言之礼仪", scores: { S: 2, P: 3, R: 1, F: 1, B: 4 } },
+          { text: "淡然一笑付之公论，胸中自有一股虚怀若谷的气度，本就不以权威自居", scores: { S: 1, P: 0, R: 3, F: 4, B: 4 } }
+        ]
+      },
+      {
+        id: 15,
+        module: "模块三：人际与凝聚",
+        tag: "施恩与报偿",
+        title: "你曾施大恩于某人，后来你身处低谷，对方却坐视不理甚至避之不及，你作何感叹？",
+        options: [
+          { text: "「世态炎凉，人之常情。」早已洞悉人性自私，丝毫不以为怪，亦无恨意", scores: { S: 3, P: 0, R: 2, F: 3, B: 5 } },
+          { text: "在心中账本记下一笔，待他日重掌大势，让其明白忘恩负义之后果", scores: { S: 2, P: 5, R: 0, F: 0, B: 2 } },
+          { text: "自责当初识人不明，权当花代价看清一人，重新校准未来的人际防范网", scores: { S: 5, P: 1, R: 1, F: 1, B: 2 } },
+          { text: "我施恩本为求心之所安，不求任何回报；对方如何待我，全由彼之心性", scores: { S: 0, P: 0, R: 4, F: 5, B: 1 } }
+        ]
+      },
+
+      // 模块四：道义与节操 (Q16-Q20)
+      {
+        id: 16,
+        module: "模块四：道义与节操",
+        tag: "手段与目的",
+        title: "若牺牲三五无辜之人的性命，即可换来全城数万百姓免受屠戮之灾，你下得去手吗？",
+        options: [
+          { text: "绝不可为！道义有不可让渡之底线，若始于不义之杀，则大义荡然无存", scores: { S: 0, P: 1, R: 4, F: 5, B: 0 } },
+          { text: "成大事者不拘小节，以极少数人的代价换全城生机，这是唯一的清醒决断", scores: { S: 3, P: 5, R: 0, F: 0, B: 3 } },
+          { text: "穷尽一切谋略寻找第三条路，不到最后一刻绝不放弃双全法", scores: { S: 5, P: 1, R: 3, F: 2, B: 2 } },
+          { text: "若非做不可，事后由我一人承担此罪业与千古骂名，自请受戮以赎罪愆", scores: { S: 1, P: 3, R: 4, F: 5, B: 0 } }
+        ]
+      },
+      {
+        id: 17,
+        module: "模块四：道义与节操",
+        tag: "富贵诱惑",
+        title: "敌对国许以万户侯与无上荣华诱你归降，若拒之则全家有罹难之危，你将？",
+        options: [
+          { text: "「人生自古谁无死，留取丹心照汗青！」从容就义，绝不玷污青史名节", scores: { S: 0, P: 2, R: 2, F: 5, B: 0 } },
+          { text: "虚以委蛇先假意受降，潜伏暗处刺探其机密，誓做深入敌腹之致命利刃", scores: { S: 4, P: 3, R: 0, F: 0, B: 5 } },
+          { text: "以高超论辩说服敌方君王，陈述杀我之弊与两国和平之益，借势破局", scores: { S: 5, P: 1, R: 2, F: 2, B: 3 } },
+          { text: "散尽家财遣散族人，一人泛扁舟遁入江湖，让名利屠刀扑一个空", scores: { S: 2, P: 0, R: 1, F: 4, B: 5 } }
+        ]
+      },
+      {
+        id: 18,
+        module: "模块四：道义与节操",
+        tag: "规矩与变通",
+        title: "一项古老的宗法礼制已严重阻碍社会生产力的发展，但人人视其为祖制不可动摇，你？",
+        options: [
+          { text: "「法非从天降，顺民情而立！」敢为人先发起雷霆变法，即便身遭车裂亦无悔", scores: { S: 3, P: 5, R: 1, F: 4, B: 0 } },
+          { text: "托古改制，借用古代圣贤的经典言辞包装新法，减少舆论阻力徐徐推行", scores: { S: 5, P: 1, R: 1, F: 1, B: 5 } },
+          { text: "在局部区域试点样板，用肉眼可见的富庶成果说服民众，顺应民心而变", scores: { S: 4, P: 2, R: 4, F: 1, B: 3 } },
+          { text: "顺其自然，礼坏乐崩本是天道周期，文明自会演变，无须人力过分狂妄干涉", scores: { S: 1, P: 0, R: 2, F: 4, B: 5 } }
+        ]
+      },
+      {
+        id: 19,
+        module: "模块四：道义与节操",
+        tag: "秉公执法",
+        title: "你主持掌管天下刑狱，当朝驸马/宠妃之弟犯下人命大案，满朝求情，你如何落笔？",
+        options: [
+          { text: "天子犯法与庶民同罪！力排众议依法判斩，铁面无私，万死不避", scores: { S: 1, P: 4, R: 2, F: 5, B: 0 } },
+          { text: "依律严惩首恶，但文书措辞严密无懈可击，让宫廷与权臣找不到任何翻案借口", scores: { S: 5, P: 3, R: 1, F: 3, B: 1 } },
+          { text: "秘密搜集该纨绔背后所有保护伞罪证，借此案一举将整个贪腐集团连根拔起", scores: { S: 4, P: 4, R: 0, F: 2, B: 3 } },
+          { text: "按律重判流放充军，既给死者交代，又避开君臣彻底撕破脸之绝境", scores: { S: 2, P: 1, R: 2, F: 1, B: 5 } }
+        ]
+      },
+      {
+        id: 20,
+        module: "模块四：道义与节操",
+        tag: "知行合一",
+        title: "当你读遍圣贤经传，却发现书本教条在残酷现实面前处处碰壁，你的觉悟是？",
+        options: [
+          { text: "「破山中贼易，破心中贼难。」向内求索良知，在实践中磨砺知行合一", scores: { S: 4, P: 2, R: 4, F: 5, B: 1 } },
+          { text: "圣贤书本就是治天下之术，需取其精髓弃其虚文，因时因地唯实唯用", scores: { S: 4, P: 3, R: 1, F: 1, B: 5 } },
+          { text: "抛弃儒生软弱幻想，唯有法度、权力与兵戈才是现实运转的唯一真相", scores: { S: 2, P: 5, R: 0, F: 1, B: 2 } },
+          { text: "文字本是糟粕，真道存乎天地山水与百姓日用之间，何必执着于故纸堆", scores: { S: 1, P: 0, R: 2, F: 5, B: 4 } }
+        ]
+      },
+
+      // 模块五：心性与归宿 (Q21-Q25)
+      {
+        id: 21,
+        module: "模块五：心性与归宿",
+        tag: "功名巅峰",
+        title: "倘若有一日海内平定、你功高震主受封王爵，你接下来的终极心愿是？",
+        options: [
+          { text: "立即上表辞官归隐，留下一曲高山流水，做回闲云野鹤，求大逍遥", scores: { S: 2, P: 0, R: 0, F: 5, B: 4 } },
+          { text: "功成身退，泛舟太湖商海，以智慧经商散财，达则兼济天下", scores: { S: 4, P: 1, R: 2, F: 2, B: 5 } },
+          { text: "建立经世致用的万世宪章与学派，将思想谱系传之后世，启迪千秋学子", scores: { S: 5, P: 2, R: 4, F: 4, B: 0 } },
+          { text: "继续执掌乾坤，开疆拓土，只要一息尚存，便要推动历史车轮滚滚向前", scores: { S: 2, P: 5, R: 0, F: 1, B: 2 } }
+        ]
+      },
+      {
+        id: 22,
+        module: "模块五：心性与归宿",
+        tag: "独处冥思",
+        title: "深夜独自一人面对浩瀚星空与古卷，你内心最深沉的叩问通常是？",
+        options: [
+          { text: "这宇宙天地万物运转之底层规律究竟为何？人如何才能与之合而为一？", scores: { S: 4, P: 0, R: 1, F: 5, B: 3 } },
+          { text: "我这一生是否无愧于天地苍生，是否为天下寒士开辟了半寸生存空间？", scores: { S: 1, P: 1, R: 5, F: 4, B: 0 } },
+          { text: "我的战略推演还有哪些盲区？明日之局势将走向何方？", scores: { S: 5, P: 2, R: 1, F: 1, B: 2 } },
+          { text: "千秋万岁之后，我的功业与丰碑是否能在史册上熠熠生辉？", scores: { S: 1, P: 5, R: 0, F: 2, B: 1 } }
+        ]
+      },
+      {
+        id: 23,
+        module: "模块五：心性与归宿",
+        tag: "审美境界",
+        title: "下列四种审美意境，哪一种最能击中你的灵魂共鸣？",
+        options: [
+          { text: "「大漠孤烟直，长河落日圆」—— 辽阔苍凉、金戈铁马的壮美雄浑", scores: { S: 2, P: 5, R: 0, F: 2, B: 1 } },
+          { text: "「落霞与孤鹜齐飞，秋水共长天一色」—— 华美超然、神思飞扬的极度浪漫", scores: { S: 1, P: 1, R: 2, F: 5, B: 3 } },
+          { text: "「采菊东篱下，悠然见南山」—— 淡泊宁静、回归本质的纯粹真朴", scores: { S: 1, P: 0, R: 2, F: 5, B: 4 } },
+          { text: "「山高月小，水落石出」—— 智者洞察、世相清明的澄澈深邃", scores: { S: 5, P: 1, R: 1, F: 3, B: 2 } }
+        ]
+      },
+      {
+        id: 24,
+        module: "模块五：心性与归宿",
+        tag: "生死了悟",
+        title: "面对衰老、死亡与世事的无常幻灭，你内心最自洽的解法是？",
+        options: [
+          { text: "方生方死，方死方生。顺应自然之大化，如乘天地之正而御六气之辩", scores: { S: 2, P: 0, R: 1, F: 5, B: 4 } },
+          { text: "死生亦大矣，只要毕生心血已融入制度与天下福祉，肉体虽逝精神不朽", scores: { S: 4, P: 2, R: 4, F: 4, B: 0 } },
+          { text: "向死而生！正因生命短暂，方要抓紧每一寸光阴建功立业，活出轰轰烈烈", scores: { S: 2, P: 5, R: 0, F: 2, B: 2 } },
+          { text: "「一蓑烟雨任平生」，成败悲喜皆是风景，只要痛快淋漓地爱过活过便是胜者", scores: { S: 1, P: 1, R: 3, F: 4, B: 5 } }
+        ]
+      },
+      {
+        id: 25,
+        module: "模块五：心性与归宿",
+        tag: "千秋墓志",
+        title: "倘若能在你的墓碑上留下一句自白，你最希望是以下哪一句话？",
+        options: [
+          { text: "「鞠躬尽瘁，死而后已。」—— 虽千万人吾往矣的至纯智谋与责任", scores: { S: 5, P: 2, R: 4, F: 3, B: 0 } },
+          { text: "「周公吐哺，天下归心。」—— 扫平寰宇、广揽奇才的铁血开创者", scores: { S: 2, P: 5, R: 1, F: 1, B: 2 } },
+          { text: "「平生多难，亦多胜迹；知我罪我，其惟春秋。」—— 破除旧制、无畏浮名的改革巨擘", scores: { S: 4, P: 4, R: 1, F: 4, B: 1 } },
+          { text: "「此心光明，亦复何言！」—— 历经百死沧桑、内心自给自足的光明圣者", scores: { S: 3, P: 1, R: 3, F: 5, B: 3 } }
+        ]
+      }
+    ];
+
+    /* =========================================================================
+       2. 历史人物数据库 (共 40+ 位，包含大量典型女性与男性，不在界面展示数量)
+       gender: 'M' or 'F'
+       五维基准值: S (智略), P (魄力), R (仁德), F (风骨), B (变通)
+    ========================================================================= */
+    const HISTORICAL_PERSONAS = [
+      // ---------- 女性历史人物 (Female 20位) ----------
+      {
+        id: "wuzetian",
+        name: "武则天",
+        gender: "F",
+        archetype: "九天阊阖 · 巾帼提挈的铁血掌舵人",
+        quote: "“千秋功过，留待后人评说。”",
+        vector: { S: 19, P: 24, R: 4, F: 8, B: 17 },
+        cognitiveAnalysis: "你拥有打破一切历史天花板的无畏意志。在严酷现实与质疑面前，你能敏锐洞悉利益核心与权能博弈；行事果决雷厉，不拘常格，具备极强的开创新局面之决心。",
+        coreStrengths: "超强决断力与魄力、破除传统禁锢的开拓意志、卓越的危机掌控力。",
+        blindspots: "对失控风险反应过敏，强势手腕容易给身旁团队造成巨大压迫感。",
+        workplace: "集团最高掌舵者 / 破局型连续创业家 / 复杂危机处置首席官",
+        advice: "刚者易折，当大势底定之时，多修含弘包容之法，以柔润化刚烈。"
+      },
+      {
+        id: "fuhao",
+        name: "妇好",
+        gender: "F",
+        archetype: "金钺定邦 · 叱咤风云的华夏第一统帅",
+        quote: "“国之大事，在祀与戎；执钺荡寇，四海宾服。”",
+        vector: { S: 15, P: 25, R: 6, F: 14, B: 8 },
+        cognitiveAnalysis: "你具备与生俱来的将帅风度与敢于亮剑之气魄。面对生死危亡，从不退缩犹豫；既能挂帅亲征决战沙场，又具敬畏天地之精神沉淀，是行动力与使命感的化身。",
+        coreStrengths: "身先士卒的带头魄力、无所畏惧的攻坚韧劲、超强号召力。",
+        blindspots: "习惯于单刀直入解决阻碍，面对迂回复杂的迂腐文官政治易生厌烦。",
+        workplace: "前线作战总指挥 / 核心攻坚战队领袖 / 开疆拓土一把手",
+        advice: "兵者贵在知止，除了勇往直前的攻势，更需留三分后劲以防暗箭。"
+      },
+      {
+        id: "lianghongyu",
+        name: "梁红玉",
+        gender: "F",
+        archetype: "擂鼓战金山 · 拔山超海的擎天巾帼",
+        quote: "“巾帼何曾让须眉，金山一战鼓声雷。”",
+        vector: { S: 14, P: 23, R: 9, F: 19, B: 9 },
+        cognitiveAnalysis: "你有极高的逆商与临阵定力。越是在狂澜翻卷的至暗时刻，越能迸发出惊天动地的定海神针力量；敢于站在风口浪尖承担生死责任，令众生景仰。",
+        coreStrengths: "危难当头的定力、鼓舞士气的人格磁场、铁骨铮铮的担当。",
+        blindspots: "过于苛求自己在团队中完美扛鼎，容易身心负荷过载而不轻言求援。",
+        workplace: "应急反应指挥官 / 险境救援项目总舵手 / 核心骨干领路人",
+        advice: "弦绷太紧终有一疲，学会在后方卸下重担，允许他人为你分忧。"
+      },
+      {
+        id: "pingyang",
+        name: "平阳昭公主",
+        gender: "F",
+        archetype: "娘子雄师 · 威肃万里的定鼎军侯",
+        quote: "“提兵百万下关山，万里黄尘一战安。”",
+        vector: { S: 18, P: 22, R: 13, F: 12, B: 11 },
+        cognitiveAnalysis: "你具备一流的战略组织力与大局协同感。你懂得如何在群雄逐鹿中聚拢各路流民与英雄，纪律严明而又深得民心，展现出无与伦比的制度化治军智慧。",
+        coreStrengths: "顶尖的组织与协同体系构建能力、严明的纪律与公信力。",
+        blindspots: "过于注重整体战略而可能忽略了个别下属的细腻情感诉求。",
+        workplace: "首席运营官 (COO) / 大规模生态平台组织操盘手 / 战略整合家",
+        advice: "威严之余增一分慈和，则团队凝聚力更如深潭般牢固。"
+      },
+      {
+        id: "liqingzhao",
+        name: "李清照",
+        gender: "F",
+        archetype: "生当人杰 · 傲骨凌霜的千古词家",
+        quote: "“生当作人杰，死亦为鬼雄。至今思项羽，不肯过江东。”",
+        vector: { S: 10, P: 11, R: 9, F: 25, B: 13 },
+        cognitiveAnalysis: "你具有极其高洁清澈的灵魂与不可折辱的气节。你的才华绝代非凡，但更惊艳的是在山河倾覆、人心苟安之际，敢于发出刺破苍穹的浩然绝唱；真率坦荡，宁鸣而死。",
+        coreStrengths: "卓越非凡的审美洞察力、绝不从众的人格骨气、高度自洽的情感真实度。",
+        blindspots: "对世俗虚伪和怯懦零容忍，容易因言辞过于犀利而招致平庸之辈嫉恨。",
+        workplace: "顶尖独立内容创作者 / 文化思想引领者 / 先锋学术与文艺评论大家",
+        advice: "世间浑浊乃常态，守心之余不妨留三分圆融，莫让真性情被宵小所累。"
+      },
+      {
+        id: "xiedaoyun",
+        name: "谢道韫",
+        gender: "F",
+        archetype: "咏絮之才 · 雅量林下风气的清雅智士",
+        quote: "“未若柳絮因风起。神情散朗，故有林下风气。”",
+        vector: { S: 18, P: 14, R: 11, F: 23, B: 12 },
+        cognitiveAnalysis: "你兼具诗性才情与临危不惧的智谋清骨。在平静日常中，你如清风朗月般优雅散朗；在乱兵临门的大变局中，亦能怀刃面贼、从容对谈，展露出魏晋士人的最高精神人格。",
+        coreStrengths: "超凡脱俗的气度与谈吐、泰山崩于前而色不变的静气、深厚底蕴。",
+        blindspots: "审美与精神标准极高，对精神平庸或言语粗俗的伙伴容易在内心悄然疏离。",
+        workplace: "首席品牌美学架构师 / 高端智库特聘专家 / 危机公关与名誉统帅",
+        advice: "知音难觅，对世间常人多施春风化雨之宽恕，方显大家风度。"
+      },
+      {
+        id: "banzhao",
+        name: "班昭（曹大家）",
+        gender: "F",
+        archetype: "续写汉史 · 德艺兼备的经纬女师",
+        quote: "“谦让恭敬，先人后己；执笔千秋，述往思来。”",
+        vector: { S: 22, P: 10, R: 16, F: 18, B: 12 },
+        cognitiveAnalysis: "你拥有极度严谨的学术理性与经天纬地的治学定力。身处皇室智囊之席而不迷失，耐得住数十年青灯黄卷的寂寞，补全千古信史，开后世学术之风气。",
+        coreStrengths: "极高的系统化整理与深耕定力、渊博广博的学识见地、温良恭俭的威望。",
+        blindspots: "行事稳重偏于保守，在需要颠覆旧规则时容易因顾全大局而迟疑。",
+        workplace: "知识体系首席架构师 / 国家级智库学者 / 传承型教育奠基人",
+        advice: "在规训传承之余，不妨多释放心底天真与跳跃的一面。"
+      },
+      {
+        id: "shangguanwaner",
+        name: "上官婉儿",
+        gender: "F",
+        archetype: "巾帼宰辅 · 玲珑机敏的文衡枢纽",
+        quote: "“秤量天下文士，挥洒笔底风云。”",
+        vector: { S: 21, P: 13, R: 8, F: 11, B: 24 },
+        cognitiveAnalysis: "你具有绝顶聪慧的政治敏锐度与绝处逢生的生存智慧。在权力旋涡与极度凶险的修罗场中，你以文采与智谋成为各方争相倚重的核心大脑，善于在狭缝中长袖善舞。",
+        coreStrengths: "极其敏锐的局势感知力、卓越的文书与沟通艺术、化险为夷的变通手腕。",
+        blindspots: "过于游刃于利益与权术之间，有时会被迫妥协原则而感到心力交瘁。",
+        workplace: "政府事务与公共关系总操盘 / 核心枢纽幕僚长 / 跨界资源整合巨匠",
+        advice: "巧计虽能自保，唯有深扎于长久正道，方能在历史狂涛中安身立命。"
+      },
+      {
+        id: "zhangsun",
+        name: "长孙皇后",
+        gender: "F",
+        archetype: "母仪贞观 · 润物无声的贤哲定海针",
+        quote: "“居安思危，戒骄戒盈；抑外戚以安邦，纳直言以辅政。”",
+        vector: { S: 20, P: 11, R: 25, F: 16, B: 14 },
+        cognitiveAnalysis: "你的智慧是天地间最温润而强大的化解之力。你深知最高权力运行的盲区与虚妄，以无私与谦退避嫌，在关键时刻屡次劝谏保全直臣性命，是盛世背后最伟大的精神后盾。",
+        coreStrengths: "极高的情商与同理心、深谙人性的化解艺术、崇高无私的品行境界。",
+        blindspots: "将所有隐患与委屈默默自我消化，不愿轻易给他人添麻烦，常易心累。",
+        workplace: "最高治理委员会良心导师 / 家族与企业传承核心守护者 / 顶级调解人",
+        advice: "体恤他人之余，请务必多关照自身的脆弱与疲惫。"
+      },
+      {
+        id: "qinliangyu",
+        name: "秦良玉",
+        gender: "F",
+        archetype: "白杆长枪 · 独步正史的巾帼列侯",
+        quote: "“臣妇一生无二志，愿将孤胆报明廷。”",
+        vector: { S: 15, P: 23, R: 12, F: 24, B: 6 },
+        cognitiveAnalysis: "你的忠诚与节操宛如雪山上的孤松，傲雪凌霜。哪怕家破人亡、朝纲倾颓，你一人一枪镇守一方，是唯一定载入正史将相列传的绝世女将，具有铁石不移的意志。",
+        coreStrengths: "坚如磐石的忠信底线、百折不屈的战阵胆魄、深受兵民爱戴的军威。",
+        blindspots: "对认准的道义与责任绝不拐弯，在时代车轮滚滚逆转时往往宁为玉碎。",
+        workplace: "首席安全防线掌门人 / 坚守底线型高管 / 独立战区核心主将",
+        advice: "天命有时而尽，尽人事而后听天命，切莫将整个时代的过错压于一肩。"
+      },
+      {
+        id: "xianfuren",
+        name: "冼夫人",
+        gender: "F",
+        archetype: "谯国夫人 · 岭南百越的一方圣母",
+        quote: "“我事三代主，唯用一好心。”",
+        vector: { S: 20, P: 19, R: 22, F: 15, B: 17 },
+        cognitiveAnalysis: "你具有博大深沉的区域大格局与平定四海之仁者胸怀。历经数朝兴替，你始终以百姓免受战乱之苦为唯一指针，恩威并济，跨越民族阻隔，赢得了千百年的无上敬仰。",
+        coreStrengths: "极高的人和凝聚力、统揽全局的宏伟气度、兼顾实利与和平的政治智慧。",
+        blindspots: "所背负的族群与历史包袱过于沉重，一生难得有彻底属于个人的闲暇。",
+        workplace: "跨区域跨文化治理领袖 / 和平联盟总理事长 / 卓越民生实干家",
+        advice: "功在千秋，亦要学会在属于自己的时光中，品味人间的静谧。"
+      },
+      {
+        id: "wencheng",
+        name: "文成公主",
+        gender: "F",
+        archetype: "日月宝镜 · 润泽雪域的和平使者",
+        quote: "“弃却长安繁华梦，播洒智慧向雪域。”",
+        vector: { S: 16, P: 14, R: 24, F: 18, B: 18 },
+        cognitiveAnalysis: "你拥有极强的适应韧劲与文明播撒的慈悲胸怀。告别故土繁华走向未知蛮荒，你不仅毫无怨尤，更以医药、农桑、佛法启迪一方生民，化干戈为玉帛，成就千古美谈。",
+        coreStrengths: "卓越的跨文化融合适应力、伟大的奉献精神、将文明化作生活细节的执行力。",
+        blindspots: "常为了顾全远方大局而压抑内心的乡愁与个人私情。",
+        workplace: "国际文化拓展大使 / 大型跨国非营利组织领袖 / 首席慈善公益总指挥",
+        advice: "奉献之余，常向内探求安顿本心，让自己的心灵亦有一座温暖故乡。"
+      },
+      {
+        id: "fengtaihou",
+        name: "冯太后（文明太后）",
+        gender: "F",
+        archetype: "均田改制 · 奠基北魏盛世的改革巨擘",
+        quote: "“改易风俗，立均田三长；天下之治，成于断腕。”",
+        vector: { S: 22, P: 24, R: 9, F: 13, B: 15 },
+        cognitiveAnalysis: "你是一位兼具铁血手腕与顶层系统思维的制度重构大师。面对顽固落后的胡汉矛盾，你雷霆推行均田制与三长制，为日后隋唐的大一统奠定了坚如磐石的物质与制度根基。",
+        coreStrengths: "极其敏锐的宏观经济与制度推演力、排除万难的强力推进力、培养继承人的远见。",
+        blindspots: "行事严厉果决，对跟不上改革步伐的旧人往往施以重惩，少了一分温存。",
+        workplace: "企业顶层体制再造导师 / 重大改革攻坚董事长 / 宏观战略规划巨头",
+        advice: "制度虽善，推行尤赖人情温热；给变革过程留出适度的润滑缓冲期。"
+      },
+      {
+        id: "zhuowenjun",
+        name: "卓文君",
+        gender: "F",
+        archetype: "白头之吟 · 敢爱敢断的独立智女",
+        quote: "“愿得一心人，白头不相离。闻君有两意，故来相决绝。”",
+        vector: { S: 16, P: 17, R: 8, F: 23, B: 16 },
+        cognitiveAnalysis: "你具有无比勇敢的独立人格与清醒决绝的智慧底线。敢于当垆卖酒追求真爱，更敢在对方见异思迁时作诗反戈，既有当机立断的尊严，又有挽回尊严与财富的高超手腕。",
+        coreStrengths: "极致的自我意识觉醒、果敢干练的行动魄力、不依附于他人的精神内核。",
+        blindspots: "自尊心极强，在感情或信任受损时往往决绝断舍离，不给任何挽回余地。",
+        workplace: "独立女性创业标杆 / 品牌独立主理人 / 顶尖公关与商业谈判代表",
+        advice: "爱得真挚，断得从容；唯愿你在保持清醒独立之时，依旧保有爱世间的温热。"
+      },
+      {
+        id: "huangdaopo",
+        name: "黄道婆",
+        gender: "F",
+        archetype: "衣被天下 · 工匠革新的民生先师",
+        quote: "“错纱配色，织成万象；衣被天下，利泽苍生。”",
+        vector: { S: 18, P: 10, R: 23, F: 17, B: 16 },
+        cognitiveAnalysis: "你是最纯粹的实干家与技术利他主义者。历尽颠沛而不泯求索之心，将毕生习得之绝技毫无保留传授天下，用一架纺车温暖了华夏千百万农家，功德巍巍而不居名利。",
+        coreStrengths: "无私的技术革新与普及胸怀、惊人的工匠钻研精神、纯粹的利他仁心。",
+        blindspots: "不屑于争名夺利与权术算计，在复杂的世俗名利场中容易吃暗亏。",
+        workplace: "首席技术科学家 (CTO) / 工业工程与工艺革新泰斗 / 普惠民生实业领袖",
+        advice: "技术造福于世，亦当学会运用现代规则与法律工具守护自己的发明成果。"
+      },
+      {
+        id: "caiwenji",
+        name: "蔡文姬",
+        gender: "F",
+        archetype: "胡笳十八拍 · 浴血涅槃的文脉守望者",
+        quote: "“天不仁兮降乱离，地不仁兮使我逢此时；感天动地，写尽沧桑。”",
+        vector: { S: 14, P: 8, R: 16, F: 22, B: 20 },
+        cognitiveAnalysis: "你是一只历经乱世烈火洗礼而重生的不死凤凰。面对骨肉分离、流离番邦的绝大悲苦，你不仅没有崩溃，反而以惊人的记忆力默写四百余篇古籍典籍，用血泪谱写出千古绝唱。",
+        coreStrengths: "不可思议的情感容纳度与生命耐受力、强大的文化记忆与复原力、深刻的悲悯心。",
+        blindspots: "过往的创伤容易在内心深处留下隐痛，在顺境中亦偶有忧伤孤僻之感。",
+        workplace: "非遗文化抢救与复兴大师 / 深度心理创伤疗愈导师 / 传记巨著学者",
+        advice: "劫波度尽，沧海桑田；请坚信你所经历的一切磨砺，都已化作照亮人间的明灯。"
+      },
+      {
+        id: "yinlihua",
+        name: "阴丽华",
+        gender: "F",
+        archetype: "仕宦台阁 · 谦恭让爵的内治典范",
+        quote: "“辞让显妇德，谦冲保家声。”",
+        vector: { S: 17, P: 8, R: 24, F: 15, B: 20 },
+        cognitiveAnalysis: "你深明「盛极必衰、大成若缺」的至理。在唾手可得的后位面前，你能以大局为重主动退让数年；为人恭俭仁厚，不仅化解了朝廷的内耗危机，更让阴氏宗族长保富贵。",
+        coreStrengths: "高瞻远瞩的进退自处之道、令人如沐春风的仁德涵养、极强的长线自保能力。",
+        blindspots: "性格温良谦抑，有时在面对侵略性极强的挑衅时显得过于忍让克制。",
+        workplace: "家族办公室信托总架构师 / 核心治理协调人 / 品牌文化守护者",
+        advice: "谦退虽是美德，关键时刻亦当亮出锋芒，让世人知晓你的退让源于大智而非软弱。"
+      },
+      {
+        id: "liurushi",
+        name: "柳如是",
+        gender: "F",
+        archetype: "我见青山 · 傲骨羞煞降将的孤绝名媛",
+        quote: "“我见青山多妩媚，料青山见我应如是。身殉江山，何愧须眉！”",
+        vector: { S: 16, P: 16, R: 10, F: 25, B: 9 },
+        cognitiveAnalysis: "你有胜过天下无数男儿的傲骨与天下大义。面对明末乱世与丈夫的懦弱降清，你劝夫殉国未果而欲投水自尽；变卖金银助抗清义军，是一朵在浊世中盛开的带刺青莲。",
+        coreStrengths: "无可动摇的国族大义与气节、极高的文学美学天赋、巾帼不让须眉的骨气。",
+        blindspots: "对道德纯洁度要求极度苛刻，见不得半点苟且妥协，容易让自己陷入孤立苦绝。",
+        workplace: "先锋思想领袖 / 文化抗争与守护基金发起人 / 独立艺术名家",
+        advice: "世道苍茫，不仅要敢于同归于尽，更要学会在泥泞中留存薪火、熬过严冬。"
+      },
+      {
+        id: "guandaosheng",
+        name: "管道昇",
+        gender: "F",
+        archetype: "我泥中有你 · 诗画传家的兰心淑质",
+        quote: "“把一块泥，捻一个你，塑一个我；我泥中有你，你泥中有我。”",
+        vector: { S: 14, P: 8, R: 21, F: 20, B: 19 },
+        cognitiveAnalysis: "你具有东方女性最典雅温润的才情与治家智慧。诗书画样样精通，尤擅墨竹；一曲《我侬词》化解家庭危机，将艺术追求与现实烟火打理得井井有条，兼备深情与灵慧。",
+        coreStrengths: "高超的情感博弈智慧、登峰造极的书画雅趣、深厚的家庭文化塑造力。",
+        blindspots: "行事偏向温和圆润，在面对需要疾风暴雨般快刀斩乱麻的冲突时略显犹豫。",
+        workplace: "文化艺术基金会理事 / 家族传承私董会顾问 / 创意美学导师",
+        advice: "在守护温情小天地的同时，不妨将才情更多投向更广阔的社会舞台。"
+      },
+      {
+        id: "huamulan",
+        name: "花木兰",
+        gender: "F",
+        archetype: "代父从军 · 忠孝两全的破阵勇士",
+        quote: "“万里赴戎机，关山度若飞。朔气传金柝，寒光照铁衣。”",
+        vector: { S: 12, P: 24, R: 18, F: 20, B: 10 },
+        cognitiveAnalysis: "你兼具对至亲的至孝柔情与沙场征战的钢铁坚韧。为了守护至亲毅然披挂上阵，历经十年生死而不失赤子之心；功成辞官只求还家，尽显最纯粹的英雄本色。",
+        coreStrengths: "义无反顾的担当牺牲精神、出类拔萃的实战攻坚力、淡泊名利的纯真初心。",
+        blindspots: "背负着沉重的家庭责任，往往将自我个人的追求置于最后一位。",
+        workplace: "应急核心行动骨干 / 关键战役执行先锋 / 英雄楷模与文化象征",
+        advice: "你已经为别人撑起了整个世界，往后的漫长岁月，多为自己的心愿痛快而活。"
+      },
+
+      // ---------- 男性历史人物 (Male 22位) ----------
+      {
+        id: "zhuge",
+        name: "诸葛亮（孔明）",
+        gender: "M",
+        archetype: "经纬天地 · 鞠躬尽瘁的战略大宗师",
+        quote: "“非淡泊无以明志，非宁静无以致远。”",
+        vector: { S: 25, P: 9, R: 18, F: 16, B: 6 },
+        cognitiveAnalysis: "你拥有深邃的顶层架构思维与系统化推演能力。凡事谋定而后动，习惯于在繁复乱局中寻找长周期战略主线；恪守使命与承诺，对团队与事业拥有极高的责任感与自律力。",
+        coreStrengths: "远见卓识的战略蓝图、极其严密的风险防范体系、令人肃然起敬的公信力。",
+        blindspots: "过于追求尽善尽美，容易事必躬亲，在授权与放权给下属时心理负担过重。",
+        workplace: "集团首席战略官 (CSO) / 战略咨询导师 / 临危受命的操盘领袖",
+        advice: "学会在重大事务中建立梯队传承，容忍下属犯错，切勿以一身之疲竭耗尽经天之才。"
+      },
+      {
+        id: "caocao",
+        name: "曹操（孟德）",
+        gender: "M",
+        archetype: "唯才是举 · 气吞山河的乱世破局者",
+        quote: "“周公吐哺，天下归心。”",
+        vector: { S: 17, P: 25, R: 6, F: 6, B: 16 },
+        cognitiveAnalysis: "你具备罕见的开创者魄力与超强的现实主义实用精神。你不拘泥于世俗陈见，能够敏锐捕捉竞争的核心痛点；行动极其果决雷厉，兼具诗意浪漫与战阵厮杀的铁血杀伐。",
+        coreStrengths: "超强决断力、敢于打破天花板的勇气、对人才长处包容兼蓄的实用胸怀。",
+        blindspots: "敏锐多疑，对于潜在风险与失控苗头反应剧烈，有时情绪波动给身边人带来巨大压迫感。",
+        workplace: "连续创业破局者 / 商业帝国掌舵人 / 危机变革型首席执行官 (CEO)",
+        advice: "多修克己养静之功，待人以诚方能得始终，戒急躁与防范之烈。"
+      },
+      {
+        id: "sushi",
+        name: "苏轼（东坡）",
+        gender: "M",
+        archetype: "九死南荒 · 旷达超然的千古妙人",
+        quote: "“竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。”",
+        vector: { S: 9, P: 5, R: 15, F: 23, B: 22 },
+        cognitiveAnalysis: "你的心灵拥有极其罕见的自愈力与审美弹性。即便身处泥泞逆境与重重打压，你总能从一茶一饭、一江一月中重新汲取生机；为人坦荡无伪，既心系苍生，又绝不被名缰利锁困死灵魂。",
+        coreStrengths: "无与伦比的心理韧性与逆商 (AQ)、卓越的情感共情力、超凡的生活情趣与创造力。",
+        blindspots: "过于天真坦荡，不设防备，有时在尔虞我诈的利益修罗场中容易遭小人暗算。",
+        workplace: "卓越文化领军者 / 先锋创意指导 / 组织精神定海神针与文化导师",
+        advice: "在保持赤子之心的同时，当修三分防人之明，不必视天下人皆可推心置腹。"
+      },
+      {
+        id: "wangyangming",
+        name: "王阳明（伯安）",
+        gender: "M",
+        archetype: "知行合一 · 立德立功立言的圣贤操盘手",
+        quote: "“此心光明，亦复何言！”",
+        vector: { S: 21, P: 14, R: 16, F: 22, B: 11 },
+        cognitiveAnalysis: "你将内圣之道与外王之术融合得炉火纯青。你深知理论空谈毫无意义，唯有在事上磨砺才能证悟真知；在重压危机面前心若明镜、临危不乱，兼具高尚人格与高超实战破局招式。",
+        coreStrengths: "心如止水的定力、穿透表象直击本质的良知直觉、知行合一的强劲执行力。",
+        blindspots: "由于自身觉悟极高，有时容易对悟性平庸或敷衍了事的合作方感到难以理解。",
+        workplace: "顶级领袖商学院导师 / 复杂局面决胜操盘手 / 精神与商业双重领袖",
+        advice: "良知亦需落地为具体制度，对于心智未开者，制度约束往往比纯粹教化更为有效。"
+      },
+      {
+        id: "simayi",
+        name: "司马懿（仲达）",
+        gender: "M",
+        archetype: "藏锋若谷 · 终局制胜的潜行猎手",
+        quote: "“夫处世之道，亦即应变之术，岂可拘泥于常法。”",
+        vector: { S: 22, P: 10, R: 3, F: 3, B: 25 },
+        cognitiveAnalysis: "你是终极的现实主义者与耐心大师。你极其善于在弱势与动荡中藏拙蓄势，不在乎一时之口舌是非与虚名受损；擅长在长周期中等待对手犯错，并在决定局势的一瞬间给予致命一击。",
+        coreStrengths: "无坚不摧的情绪控制力、极高的抗风险与自保本领、长线资本与资源运作思维。",
+        blindspots: "过于看重利害得失与安全自保，缺乏崇高的理想主义精神感召力，容易让人敬而远之。",
+        workplace: "首席风控官 (CRO) / 顶尖并购与重组操盘人 / 幕后定鼎长老",
+        advice: "智术若无德行相附，纵得天下亦难安子孙；偶尔不妨行一次纯粹道义之事。"
+      },
+      {
+        id: "zhangliang",
+        name: "张良（子房）",
+        gender: "M",
+        archetype: "运筹帷幄 · 决胜千里之外的隐世神仙",
+        quote: "“运筹帷幄之中，决胜千里之外。”",
+        vector: { S: 25, P: 8, R: 9, F: 18, B: 17 },
+        cognitiveAnalysis: "你拥有羚羊挂角般不可捉摸的高维智识。你不贪恋权柄，却能在历史的关键转折点拨乱反正；懂得「见好就收」与「持盈保泰」的天道规律，功成之时从容身退。",
+        coreStrengths: "超维度的博弈洞察力、轻灵巧妙的四两拨千斤手段、从容避祸的旷达清醒。",
+        blindspots: "不喜繁琐日常管理，容易在需要长期组织建设的琐碎事务中产生倦怠感。",
+        workplace: "最高战略幕僚长 / 核心合伙人 / 独立智库首席咨询顾问",
+        advice: "天生清贵超脱，但人间烟火有时亦需亲身体味，不妨多留几分温度予身旁人。"
+      },
+      {
+        id: "sunwu",
+        name: "孙武（兵圣）",
+        gender: "M",
+        archetype: "不战而屈人之兵 · 唯求全胜的规则制定者",
+        quote: "“善战者，立于不败之地，而不失敌之败也。”",
+        vector: { S: 25, P: 15, R: 3, F: 8, B: 12 },
+        cognitiveAnalysis: "你的思维如同最精密的超级算法，对信息差、胜率概率与系统弱点具有本能的敏感。你从不打无准备之仗，主张用最小的消耗达成全胜，把竞争剥离为冷静透彻的科学与艺术。",
+        coreStrengths: "绝对理性的概率思维、降维打击的战法构建力、顶尖的情报敏锐度。",
+        blindspots: "凡事诉诸理性精算，在面对需要纯粹非理性激情与情感煽动时可能略显生硬冷峻。",
+        workplace: "市场对抗总指挥 / 顶尖量化与投资战略大师 / 商业竞争情报参谋长",
+        advice: "算计无遗者常苦于人算不如天算，在严密的胜率之外，给偶然性与感性留出一寸空间。"
+      },
+      {
+        id: "qianshihuang",
+        name: "秦始皇（嬴政）",
+        gender: "M",
+        archetype: "千古一帝 · 席卷八荒的秩序缔造者",
+        quote: "“朕为始皇帝。后世以计数，二世三世至于万世，传之无穷！”",
+        vector: { S: 18, P: 25, R: 2, F: 11, B: 5 },
+        cognitiveAnalysis: "你具有开天辟地般的雄心壮志与重塑世界秩序的强烈执念。你不屑于小修小补，凡事追求彻底的大一统、标准化与终极效率；对既定目标的推进具备泰山压顶般的狂热决心，不畏千夫所指。",
+        coreStrengths: "宏伟的历史格局感、雷霆万钧的战略推进力、打破旧世界规则的极致霸气。",
+        blindspots: "过分追求效率与控制，容易忽视个体的温情与承受极限，弦绷太紧易导致体系崩盘。",
+        workplace: "行业超级独角兽创始人 / 全球化基础架构缔造者 / 铁血集团重构总裁",
+        advice: "水善利万物而不争，霸道之余需兼用王道，懂得给基层留出喘息与自治的空间。"
+      },
+      {
+        id: "lishimin",
+        name: "李世民（贞观天子）",
+        gender: "M",
+        archetype: "文治武功 · 兼听则明的天可汗",
+        quote: "“以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。”",
+        vector: { S: 21, P: 21, R: 16, F: 11, B: 13 },
+        cognitiveAnalysis: "你是罕见的全能统帅。既能策马冲锋斩将夺旗，又能虚心纳谏构建贞观治世；具备极高的包容度与纠错能力，懂得利用体制与人才合力缔造空前的繁荣大局。",
+        coreStrengths: "极其全面的情商与战力平衡、广纳诤言的自我迭代力、强大的组织文化塑造本领。",
+        blindspots: "对功名与历史评价看得极重，晚年或顺境中容易滋生骄矜享乐之念。",
+        workplace: "大型集团董事会主席 / 卓越领袖型合伙人 / 平台级生态帝国缔造者",
+        advice: "终日乾乾，夕惕若厉；越是在登峰造极之时，越要保持最初听闻逆耳忠言的警醒。"
+      },
+      {
+        id: "liubei",
+        name: "刘备（玄德）",
+        gender: "M",
+        archetype: "弘毅宽厚 · 终始不改的平民英雄",
+        quote: "“勿以恶小而为之，勿以善小而不为。惟贤惟德，能服于人。”",
+        vector: { S: 8, P: 14, R: 25, F: 12, B: 18 },
+        cognitiveAnalysis: "你身上有着无与伦比的人格磁场与感染力。即便颠沛流离、半生漂泊，你始终以仁义待人，能让最顶尖的豪杰与智囊心甘情愿为你效命；坚韧如蒲苇，百折不挠。",
+        coreStrengths: "极高的共情力与人格信任感召、强大的团队凝聚力、无可挑剔的抗挫韧性 (AQ)。",
+        blindspots: "容易被深层的情感或兄弟义气绑架理性，在重大战略抉择时偶尔因感情用事而功亏一篑。",
+        workplace: "极具个人魅力的初创团队灵魂 / 首席组织文化官 (CPO) / 联盟共生倡导者",
+        advice: "义气当服从于公理大局，关键时刻必须让冷峻的理性战胜澎湃的热血。"
+      },
+      {
+        id: "weizheng",
+        name: "魏征",
+        gender: "M",
+        archetype: "骨鲠在喉 · 千秋第一诤臣",
+        quote: "“求木之长者，必固其根本；欲流之远者，必浚其泉源。”",
+        vector: { S: 18, P: 12, R: 14, F: 25, B: 4 },
+        cognitiveAnalysis: "你是制度与正义的清道夫。你恪守原则底线，眼中不揉半点沙子；不为权贵折腰，敢于冒大不韪指出最高层犯下的错误，是任何狂热时代中最不可或缺的清醒刹车片与风控之盾。",
+        coreStrengths: "刚正不阿的道德勇气、洞察隐患的敏锐风控力、无可撼动的职业操守与声望。",
+        blindspots: "过于刚直硬朗，缺乏柔性斡旋手腕，容易让合作方感到下不来台甚至引发反扑。",
+        workplace: "首席合规风控官 (CCO) / 审计委员会主席 / 资深独立治理董事",
+        advice: "大勇若怯，大智若愚；良药苦口之余，不妨多裹上一层同理与温和的糖衣。"
+      },
+      {
+        id: "fanzhongyan",
+        name: "范仲淹",
+        gender: "M",
+        archetype: "忧乐天下 · 士大夫风骨的千古标杆",
+        quote: "“先天下之忧而忧，后天下之乐而乐。”",
+        vector: { S: 17, P: 12, R: 24, F: 22, B: 8 },
+        cognitiveAnalysis: "你具有深沉博大的家国情怀与士人风骨。文能提笔安天下，武能上马定乾坤；始终站在弱势群体与文明长远福祉的角度思考，一生清廉自守，是极具崇高人格光辉的儒家典范。",
+        coreStrengths: "崇高的利他使命感、文武兼备的综合操盘手、深厚的人文关怀与制度建设力。",
+        blindspots: "心中装载的责任过重，容易活得过于沉重严肃，缺乏让自己彻底放松的松弛感。",
+        workplace: "大型公益基金会理事长 / 高级公共政策智库首脑 / 卓越企业社会责任引领人",
+        advice: "忧天下之余，亦莫忘善待自身，让自己快乐亦是造福天地的一部分。"
+      },
+      {
+        id: "baozheng",
+        name: "包拯（包青天）",
+        gender: "M",
+        archetype: "铁面无私 · 悬衡知平的正义化身",
+        quote: "“清心为治本，直道是身谋。”",
+        vector: { S: 15, P: 15, R: 16, F: 25, B: 2 },
+        cognitiveAnalysis: "你对规则、公正与天理有着近乎信仰般的虔诚。你铁面无私，绝不因人情私欲而枉法分毫；对于弱者的冤屈感同身受，是捍卫程序正义与社会公序良俗的定海神针。",
+        coreStrengths: "无可挑剔的廉洁与诚信度、刚正不阿的执行力、对恶势力与不正之风的巨大威慑力。",
+        blindspots: "过于非黑即白，对灰色地带与妥协艺术缺乏耐受力，在复杂政商生态中容易腹背受敌。",
+        workplace: "司法机关高级首长 / 纪检监察主管 / 顶级法律与合规专家",
+        advice: "至清则无鱼，至察则无徒；在坚守底线的前提下，留一分圆融以护大局。"
+      },
+      {
+        id: "libai",
+        name: "李白（青莲居士）",
+        gender: "M",
+        archetype: "谪仙凌虚 · 纵横肆意的浪漫之神",
+        quote: "“天生我材必有用，千金散尽还复来。”",
+        vector: { S: 6, P: 10, R: 10, F: 25, B: 18 },
+        cognitiveAnalysis: "你的灵魂天生属于星空与长风。你对世俗的名利规则充满骨子里的轻蔑，追求绝对的灵感自由与情感迸发；拥有火山喷发般的创造力与感染力，是行走在人间的赤子狂仙。",
+        coreStrengths: "打破一切常规的天才想象力、无可比拟的情感张力、纯粹率真的生命原力。",
+        blindspots: "不耐繁琐具体的流程细节，缺乏持续深耕琐碎事务的耐性，情绪易大起大落。",
+        workplace: "超级艺术创意巨匠 / 先锋文化潮流意见领袖 / 现象级内容操盘手",
+        advice: "大鹏展翅之余，仍需落脚凡间树枝；为自己的奇思妙想寻找一位踏实的执行合伙人。"
+      },
+      {
+        id: "zhuangzi",
+        name: "庄子（南华老仙）",
+        gender: "M",
+        archetype: "乘物游心 · 超脱造化的宇宙先知",
+        quote: "“独与天地精神往来，而不敖倪于万物。”",
+        vector: { S: 14, P: 2, R: 8, F: 25, B: 24 },
+        cognitiveAnalysis: "你站在宇宙的尺度俯瞰人类一切庸庸碌碌的争执与纷扰。你参透了齐物与逍遥的奥秘，不执着于世俗的成功定义；拥有不可思议的精神自由度与化解焦虑的顿悟智慧。",
+        coreStrengths: "超凡脱俗的哲学洞察力、终极的精神松弛感与幸福感知力、看破表象的通透。",
+        blindspots: "容易被外界视为消极避世，在需要拼尽全力争夺稀缺生存资源的世俗竞争中动力匮乏。",
+        workplace: "哲学思想大师 / 终极心智与心理咨询大师 / 独立思想家与隐修导师",
+        advice: "逍遥于世外固然美妙，然此身既生世间，不妨偶尔做几件惠泽凡俗的小事。"
+      },
+      {
+        id: "shangyang",
+        name: "商鞅",
+        gender: "M",
+        archetype: "徙木立信 · 铸就虎狼强国的法理工程师",
+        quote: "“治世不一道，便国不法古。”",
+        vector: { S: 21, P: 25, R: 1, F: 18, B: 4 },
+        cognitiveAnalysis: "你是终极的制度工程师与变革苦行僧。你深知人性趋利避害的本质，坚决摒弃虚伪温情，以绝对的严刑厚赏重塑整个国家机器；为了变革的成功，敢于对抗一切旧贵族势力。",
+        coreStrengths: "彻底的执行力与制度构建手腕、打破一切既得利益垄断的铁石心肠、极致的功利战力转化。",
+        blindspots: "制度缺乏弹性与温情容错缓冲，严刑峻法容易树敌过多，晚期往往缺乏安全退路。",
+        workplace: "激进型企业重组专家 / 严密绩效考核架构师 / 破产重组铁腕托管人",
+        advice: "法贵在严，更贵在仁；若只知重刑而不知休养生息，终将自陷绝境。"
+      },
+      {
+        id: "wanganshi",
+        name: "王安石（荆公）",
+        gender: "M",
+        archetype: "天变不足畏 · 独行千载的执拗变法者",
+        quote: "“天变不足畏，祖宗不足法，人言不足恤。”",
+        vector: { S: 20, P: 22, R: 12, F: 23, B: 3 },
+        cognitiveAnalysis: "你是一个充满悲剧色彩的理想主义实干家。你拥有超越时代的经济与金融战略眼光，认定之事九死不悔；在满朝保守派的围攻下孤身逆风前行，宁愿背负千古骂名亦要为国求变。",
+        coreStrengths: "超越时代的制度改革眼光、坚如磐石的坚守力、一心为公的纯正初心。",
+        blindspots: "性格执拗不听人劝，在推行过程中缺乏灵活的妥协变通，容易被投机小人钻了制度空子。",
+        workplace: "颠覆性金融与产业改革掌门 / 顶层体制重塑研究专家 / 坚定的深水区变革开拓人",
+        advice: "善变法者更需善于选贤任能，切莫为了推行大计而姑息投机小人，欲速则不达。"
+      },
+      {
+        id: "quyuan",
+        name: "屈原",
+        gender: "M",
+        archetype: "离骚求索 · 九死未悔的千古楚魂",
+        quote: "“亦余心之所善兮，虽九死其犹未悔。”",
+        vector: { S: 13, P: 11, R: 18, F: 25, B: 2 },
+        cognitiveAnalysis: "你对理想与大义拥有极度的洁癖与崇高追求。宁愿怀石投江，也绝不同流合污；你的作品与生命融为一体，化作华夏精神谱系中最纯粹、最坚硬的一块高洁美玉。",
+        coreStrengths: "永不妥协的道德纯洁度、惊世绝伦的诗性悲剧力量、刻骨铭心的家国担当。",
+        blindspots: "缺乏与现实妥协的弹性，面对江河日下的浊世，容易陷入痛苦的自我内耗与绝望。",
+        workplace: "非妥协性精神精神象征 / 独立文学大师 / 永恒的理想主义批判家",
+        advice: "沧浪之水清兮可以濯吾缨，沧浪之水浊兮可以濯吾足；留有用之身，方见天理昭昭。"
+      },
+      {
+        id: "taoyuanming",
+        name: "陶渊明（五柳先生）",
+        gender: "M",
+        archetype: "采菊东篱 · 不为五斗米折腰的真隐士",
+        quote: "“采菊东篱下，悠然见南山。”",
+        vector: { S: 10, P: 3, R: 12, F: 25, B: 15 },
+        cognitiveAnalysis: "你是中国田园与隐逸精神的无上圭臬。面对官场的卑躬屈膝，你从容挂冠而去，在晨兴理荒秽中寻回了人之为人的本真；淡泊以明志，活出了千古难及的从容真性情。",
+        coreStrengths: "对自我精神尊严的绝对捍卫、朴素宁静的生活美学、化繁为简的回归力量。",
+        blindspots: "对世俗职场的争夺彻底失去兴趣，在需要激烈竞争的功利社会中显得游离于边缘。",
+        workplace: "慢生活生活方式创始人 / 灵性自然休养导师 / 纯粹乡村振兴美学家",
+        advice: "结庐在人境，心远地自偏；守住田园初心之余，亦可为身边有缘人点燃一盏清茶明灯。"
+      },
+      {
+        id: "yuefei",
+        name: "岳飞（鹏举）",
+        gender: "M",
+        archetype: "精忠报国 · 撼山易撼军难的千古武穆",
+        quote: "“待从头、收拾旧山河，朝天阙。”",
+        vector: { S: 18, P: 24, R: 17, F: 25, B: 2 },
+        cognitiveAnalysis: "你拥有天下无双的治军神技与最纯粹的精忠赤诚。纪律严明「冻死不拆屋，饿死不掳掠」，在战场上横扫千军；然而在卑劣的政治构陷面前，你宁从大义也不愿拥兵自重谋反，成为万世景仰的忠义图腾。",
+        coreStrengths: "无可比拟的统帅与战斗战力、铁铸般的军纪与道德声望、毫无保留的献身气概。",
+        blindspots: "在复杂的君臣宫廷权谋面前过于坦荡纯真，缺乏必要的自保防范机巧。",
+        workplace: "最高防务统帅 / 极度严明正义的企业执行总裁 / 舍己为公的道德领航人",
+        advice: "大勇者当兼具大智，在坚守赤忱之余，必须研读复杂政治博弈中的自保之法。"
+      },
+      {
+        id: "huoqubing",
+        name: "霍去病",
+        gender: "M",
+        archetype: "封狼居胥 · 饮马翰海的绝代战神",
+        quote: "“匈奴未灭，何以家为！”",
+        vector: { S: 15, P: 25, R: 5, F: 18, B: 10 },
+        cognitiveAnalysis: "你具有天纵奇才的战争直觉与不可阻挡的锐气。你不受传统兵书拘束，擅长长途奔袭大迂回决战；视功名富贵如浮云，宛如划破夜空的耀眼流星，以绝对的战功横扫一切质疑。",
+        coreStrengths: "天马行空的战术突破力、无所畏惧的冲锋勇气、以弱胜强的狂飙气魄。",
+        blindspots: "行事过于自我与傲岸，对后勤与部下常人的体恤略显不足，锋芒过露。",
+        workplace: "破局型尖刀连队长 / 颠覆性新赛道闪击开拓者 / 青年商业黑马领军人",
+        advice: "孤勇狂飙可收一时奇效，持久的基业更需细水长流的稳健积淀与共情慈悲。"
+      },
+      {
+        id: "zengguofan",
+        name: "曾国藩",
+        gender: "M",
+        archetype: "结硬寨打呆仗 · 笨拙克己的晚清中兴名臣",
+        quote: "“凡人做一事，便须全副精神注在此一事，首尾不懈。”",
+        vector: { S: 20, P: 16, R: 15, F: 18, B: 18 },
+        cognitiveAnalysis: "你是「由平庸到超凡」的终极修炼典范。崇尚「结硬寨、打呆仗」，不走捷径，在长期的省察克己与笨功夫中完成心性的脱胎换骨；深谙进退留转，在功高震主时主动裁军自保，功德圆满。",
+        coreStrengths: "无敌的自律与知行沉淀功力、稳扎稳打的系统工程推进力、精深的内省自省能力。",
+        blindspots: "过于崇尚稳妥守成，早期在面对突发颠覆性风口时可能反应略显沉重迟缓。",
+        workplace: "长线价值投资泰斗 / 企业基业长青治理导师 / 卓越的组织自律教练",
+        advice: "慎独克己之余，给自我与身边人留一份轻松幽默，莫让心力绷至极疲。"
+      },
+      {
+        id: "xinjiji",
+        name: "辛弃疾（稼轩）",
+        gender: "M",
+        archetype: "金戈铁马 · 挑灯看剑的词中飞将",
+        quote: "“醉里挑灯看剑，梦回吹角连营。可怜白发生！”",
+        vector: { S: 17, P: 21, R: 13, F: 24, B: 8 },
+        cognitiveAnalysis: "你怀揣着五十骑闯五万大营活捉叛将的盖世勇魄，却被迫在江南一隅书写断肠词句。你的才华足以安邦定国，你的热血至死滚烫，是文人与武将精神融合的至高绝响。",
+        coreStrengths: "文武双全的罕见资质、极具震撼力的精神号召力、至死不渝的初心热血。",
+        blindspots: "才气与锐气过甚，在苟安妥协的庸碌环境中容易产生强烈的孤独感与怀才不遇之愤。",
+        workplace: "兼具战略与文案的传奇操盘领袖 / 危机公关统帅 / 震撼人心之思想家",
+        advice: "青山遮不住，毕竟东流去；在等待风云际会的长夜里，安心酿造属于自己的不朽篇章。"
+      }
+    ];
+
+    /* =========================================================================
+       3. 全局应用状态
+    ========================================================================= */
+    const REQUIRED_PASSCODE = '22456'; // 固定访问密码
+    let isPasscodeVerified = false;
+    let selectedGender = 'M'; // 'M' 乾 / 'F' 坤
+    let currentQIndex = 0;
+    let userAnswers = new Array(QUIZ_QUESTIONS.length).fill(null);
+    let radarChart = null;
+    let finalProfile = null;
+
+    /* =========================================================================
+       3.1 密码校验逻辑
+    ========================================================================= */
+    function verifyPasscode() {
+      const input = document.getElementById('passcodeInput');
+      const errorTip = document.getElementById('passcodeErrorTip');
+      const box = document.getElementById('passcodeBox');
+      const val = (input.value || '').trim();
+
+      if (val === REQUIRED_PASSCODE) {
+        isPasscodeVerified = true;
+        errorTip.classList.add('hidden');
+        showToast('密匙核验通过，开卷问策');
+        showView('home');
+      } else {
+        errorTip.classList.remove('hidden');
+        box.classList.remove('shake');
+        void box.offsetWidth; // 触发重绘
+        box.classList.add('shake');
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    function togglePasscodeVisibility() {
+      const input = document.getElementById('passcodeInput');
+      const icon = document.getElementById('passcodeEyeIcon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fa-regular fa-eye text-stone-700';
+      } else {
+        input.type = 'password';
+        icon.className = 'fa-regular fa-eye-slash text-stone-400';
+      }
+    }
+
+    /* =========================================================================
+       4. 性别选择与页面视图调度
+    ========================================================================= */
+    function selectGender(gender) {
+      selectedGender = gender;
+      const maleCard = document.getElementById('genderCardMale');
+      const femaleCard = document.getElementById('genderCardFemale');
+
+      if (gender === 'M') {
+        maleCard.classList.add('active');
+        femaleCard.classList.remove('active');
+      } else {
+        femaleCard.classList.add('active');
+        maleCard.classList.remove('active');
+      }
+    }
+
+    function showView(viewName) {
+      document.getElementById('viewPasscode').classList.add('hidden');
+      document.getElementById('viewHome').classList.add('hidden');
+      document.getElementById('viewQuiz').classList.add('hidden');
+      document.getElementById('viewCalculating').classList.add('hidden');
+      document.getElementById('viewResult').classList.add('hidden');
+      
+      const navRestart = document.getElementById('navRestartBtn');
+      if (viewName === 'passcode') {
+        document.getElementById('viewPasscode').classList.remove('hidden');
+        navRestart.classList.add('hidden');
+      } else if (viewName === 'home') {
+        document.getElementById('viewHome').classList.remove('hidden');
+        navRestart.classList.add('hidden');
+      } else if (viewName === 'quiz') {
+        document.getElementById('viewQuiz').classList.remove('hidden');
+        navRestart.classList.remove('hidden');
+      } else if (viewName === 'calculating') {
+        document.getElementById('viewCalculating').classList.remove('hidden');
+        navRestart.classList.add('hidden');
+      } else if (viewName === 'result') {
+        document.getElementById('viewResult').classList.remove('hidden');
+        navRestart.classList.remove('hidden');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function startTest() {
+      if (!isPasscodeVerified) {
+        showView('passcode');
+        return;
+      }
+      currentQIndex = 0;
+      userAnswers = new Array(QUIZ_QUESTIONS.length).fill(null);
+      renderQuestion();
+      showView('quiz');
+    }
+
+    function confirmRestartQuiz() {
+      startTest();
+      showToast('已重设问卷，请依心开卷作答');
+    }
+
+    /* =========================================================================
+       5. 答题流渲染与操作
+    ========================================================================= */
+    function renderQuestion() {
+      // 边界守卫：防止索引超出题目数组边界导致 undefined 错误
+      if (currentQIndex < 0) currentQIndex = 0;
+      if (currentQIndex >= QUIZ_QUESTIONS.length) {
+        currentQIndex = QUIZ_QUESTIONS.length - 1;
+      }
+
+      const q = QUIZ_QUESTIONS[currentQIndex];
+      if (!q) return;
+      
+      document.getElementById('currentModuleBadge').innerText = q.module;
+      document.getElementById('qCurrentIndex').innerText = currentQIndex + 1;
+      document.getElementById('qTagText').innerText = q.tag;
+      document.getElementById('qNumberWatermark').innerText = String(currentQIndex + 1).padStart(2, '0');
+      document.getElementById('qTitleText').innerText = q.title;
+
+      const answeredTotal = userAnswers.filter(a => a !== null).length;
+      document.getElementById('answeredCount').innerText = answeredTotal;
+      const progressPercent = Math.round(((currentQIndex + 1) / QUIZ_QUESTIONS.length) * 100);
+      document.getElementById('quizProgressBar').style.width = progressPercent + '%';
+
+      document.getElementById('prevBtn').disabled = (currentQIndex === 0);
+      
+      const isCurrentAnswered = (userAnswers[currentQIndex] !== null);
+      const isLast = (currentQIndex === QUIZ_QUESTIONS.length - 1);
+      const isComplete = (answeredTotal === QUIZ_QUESTIONS.length);
+
+      const nextBtn = document.getElementById('nextBtn');
+      const submitBtn = document.getElementById('submitBtn');
+
+      if (isLast || isComplete) {
+        nextBtn.classList.add('hidden');
+        submitBtn.classList.remove('hidden');
+      } else {
+        nextBtn.classList.remove('hidden');
+        submitBtn.classList.add('hidden');
+        // 未作答当前题时禁用下一题按钮
+        nextBtn.disabled = !isCurrentAnswered;
+      }
+
+      const optionsBox = document.getElementById('optionsContainer');
+      optionsBox.innerHTML = '';
+
+      const letters = ['甲', '乙', '丙', '丁'];
+      const currentSelected = userAnswers[currentQIndex];
+
+      q.options.forEach((opt, idx) => {
+        const isSel = (currentSelected === idx);
+        const btn = document.createElement('div');
+        btn.className = `quiz-option p-4 rounded-xl border border-stone-200 bg-white/80 cursor-pointer flex items-start gap-3.5 select-none ${isSel ? 'selected ring-1 ring-vermilion' : ''}`;
+        
+        btn.innerHTML = `
+          <div class="w-6 h-6 rounded-md ${isSel ? 'bg-vermilion text-white font-bold' : 'bg-stone-100 text-stone-600 border border-stone-300'} flex items-center justify-center text-xs shrink-0 font-serif">
+            ${letters[idx]}
+          </div>
+          <div class="pt-0.5 text-xs md:text-sm text-stone-800 leading-relaxed font-sans">
+            ${opt.text}
+          </div>
+        `;
+
+        btn.onclick = () => selectOption(idx);
+        optionsBox.appendChild(btn);
+      });
+    }
+
+    function selectOption(optionIndex) {
+      userAnswers[currentQIndex] = optionIndex;
+      renderQuestion();
+
+      // 仅当并非最后一题时才自动切至下一题，避免 currentQIndex 越界
+      if (currentQIndex < QUIZ_QUESTIONS.length - 1) {
+        setTimeout(() => {
+          if (currentQIndex < QUIZ_QUESTIONS.length - 1) {
+            currentQIndex++;
+            renderQuestion();
+          }
+        }, 220);
+      }
+    }
+
+    function navigateQuestion(step) {
+      // 向后跳转时必须已回答当前题目
+      if (step > 0 && userAnswers[currentQIndex] === null) {
+        showToast('请先作出本题抉择，方可继续前行');
+        return;
+      }
+
+      const nextIdx = currentQIndex + step;
+      if (nextIdx >= 0 && nextIdx < QUIZ_QUESTIONS.length) {
+        currentQIndex = nextIdx;
+        renderQuestion();
+      }
+    }
+
+    /* =========================================================================
+       6. 答题卡快速跳转
+    ========================================================================= */
+    function toggleSheetModal(show) {
+      const modal = document.getElementById('sheetModal');
+      if (show) {
+        const grid = document.getElementById('sheetGrid');
+        grid.innerHTML = '';
+        const answeredTotal = userAnswers.filter(a => a !== null).length;
+        document.getElementById('sheetAnsweredCount').innerText = answeredTotal;
+
+        QUIZ_QUESTIONS.forEach((q, idx) => {
+          const isAnswered = (userAnswers[idx] !== null);
+          const isCurrent = (currentQIndex === idx);
+          
+          const item = document.createElement('button');
+          item.className = `h-10 rounded-lg text-xs font-serif font-bold transition flex flex-col items-center justify-center border
+            ${isCurrent ? 'ring-2 ring-gold border-gold' : ''}
+            ${isAnswered ? 'bg-vermilion text-white border-vermilion' : 'bg-stone-100 text-stone-600 border-stone-300 hover:bg-stone-200'}`;
+          
+          item.innerText = idx + 1;
+          item.onclick = () => {
+            currentQIndex = idx;
+            renderQuestion();
+            toggleSheetModal(false);
+          };
+          grid.appendChild(item);
+        });
+
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    /* =========================================================================
+       7. 算法匹配引擎（考虑性别优先与五维向量距离）
+    ========================================================================= */
+    function submitQuiz() {
+      // 检查是否有漏答题
+      const unAnsIdx = userAnswers.findIndex(a => a === null);
+      if (unAnsIdx !== -1) {
+        currentQIndex = unAnsIdx;
+        renderQuestion();
+        showToast(`第 ${unAnsIdx + 1} 题尚未作答，请先完成此题！`);
+        return;
+      }
+
+      showView('calculating');
+      const tips = [
+        "沉潜先贤谱系 · 考校五维心智气象...",
+        "解构风骨与变通极性 · 校准战略纵深...",
+        "寻绎千秋同侪镜鉴 · 铸印生成专属判词..."
+      ];
+      let tipStep = 0;
+      const tipElement = document.getElementById('calcDynamicTip');
+
+      const interval = setInterval(() => {
+        tipStep++;
+        if (tipElement && tips[tipStep]) {
+          tipElement.innerText = tips[tipStep];
+        }
+      }, 500);
+
+      setTimeout(() => {
+        clearInterval(interval);
+        try {
+          computeAndDisplayResults();
+        } catch (err) {
+          console.error("计算结果异常:", err);
+          showView('result');
+        }
+      }, 1200);
+    }
+
+    function computeAndDisplayResults() {
+      let userTotals = { S: 0, P: 0, R: 0, F: 0, B: 0 };
+
+      userAnswers.forEach((optIdx, qIdx) => {
+        if (optIdx !== null && QUIZ_QUESTIONS[qIdx] && QUIZ_QUESTIONS[qIdx].options[optIdx]) {
+          const option = QUIZ_QUESTIONS[qIdx].options[optIdx];
+          userTotals.S += (option.scores.S || 0);
+          userTotals.P += (option.scores.P || 0);
+          userTotals.R += (option.scores.R || 0);
+          userTotals.F += (option.scores.F || 0);
+          userTotals.B += (option.scores.B || 0);
+        }
+      });
+
+      // 计算与所有人物的欧氏距离
+      const scoredFigures = HISTORICAL_PERSONAS.map(fig => {
+        const v = fig.vector || { S: 10, P: 10, R: 10, F: 10, B: 10 };
+        const dist = Math.sqrt(
+          Math.pow(userTotals.S - v.S, 2) +
+          Math.pow(userTotals.P - v.P, 2) +
+          Math.pow(userTotals.R - v.R, 2) +
+          Math.pow(userTotals.F - v.F, 2) +
+          Math.pow(userTotals.B - v.B, 2)
+        );
+        return { figure: fig, distance: dist };
+      });
+
+      // 按照距离升序排序（距离越小匹配度越高）
+      scoredFigures.sort((a, b) => a.distance - b.distance);
+
+      // 主型：优先匹配所选性别的人物（如果匹配库有）
+      const primaryCandidate = scoredFigures.find(item => item.figure.gender === selectedGender) || scoredFigures[0];
+      const primary = primaryCandidate.figure;
+
+      // 辅型：从剩余人物中挑选最匹配的另一位（跨人物呼应）
+      const secondaryCandidate = scoredFigures.find(item => item.figure.id !== primary.id) || scoredFigures[1] || scoredFigures[0];
+      const secondary = secondaryCandidate.figure;
+
+      // 计算一个直观的契合百分比 (85% - 99%)
+      const maxPossibleDist = 55;
+      const fitRatio = Math.max(0.85, 1 - (primaryCandidate.distance / maxPossibleDist));
+      const matchPercentage = Math.min(99, Math.round(fitRatio * 100));
+
+      finalProfile = {
+        primary,
+        secondary,
+        matchPercentage,
+        userScores: userTotals
+      };
+
+      // 赋值到结果页 DOM（增加节点存在性安全判断）
+      const setText = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = val;
+      };
+
+      setText('resArchetypeTitle', primary.archetype);
+      setText('resCharacterName', primary.name);
+      setText('resQuote', primary.quote);
+      setText('resMatchScore', `${matchPercentage}%`);
+      setText('resSecondaryName', secondary.name);
+      setText('resSecondaryDesc', secondary.archetype ? (secondary.archetype.split('·')[1]?.trim() || "气象暗合") : "同频相映");
+
+      setText('scoreDim1', userTotals.S);
+      setText('scoreDim2', userTotals.P);
+      setText('scoreDim3', userTotals.R);
+      setText('scoreDim4', userTotals.F);
+      setText('scoreDim5', userTotals.B);
+
+      setText('resCognitiveAnalysis', primary.cognitiveAnalysis);
+      setText('resCoreStrengths', primary.coreStrengths);
+      setText('resBlindspots', primary.blindspots);
+      setText('resWorkplaceBench', primary.workplace);
+      setText('resAdviceText', primary.advice);
+
+      // 切换至结果视图
+      showView('result');
+
+      // 异步尝试绘制雷达图，不阻塞主报告展示
+      setTimeout(() => {
+        try {
+          renderRadarChart(userTotals);
+        } catch (e) {
+          console.warn("雷达图绘制降级处理:", e);
+        }
+      }, 50);
+    }
+
+    /* =========================================================================
+       8. 雷达图绘制（带异常保护）
+    ========================================================================= */
+    function renderRadarChart(scores) {
+      const canvas = document.getElementById('radarCanvas');
+      if (!canvas || typeof Chart === 'undefined') return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      if (radarChart) {
+        radarChart.destroy();
+        radarChart = null;
+      }
+
+      radarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: [
+            ['智略', 'Strategy'],
+            ['魄力', 'Drive'],
+            ['仁德', 'Benevolence'],
+            ['风骨', 'Integrity'],
+            ['变通', 'Resilience']
+          ],
+          datasets: [{
+            label: '我的五维心智值',
+            data: [scores.S, scores.P, scores.R, scores.F, scores.B],
+            backgroundColor: 'rgba(185, 56, 38, 0.22)',
+            borderColor: '#b93826',
+            borderWidth: 2,
+            pointBackgroundColor: '#b28026',
+            pointBorderColor: '#ffffff',
+            pointHoverBackgroundColor: '#ffffff',
+            pointHoverBorderColor: '#b93826',
+            pointRadius: 4.5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            r: {
+              angleLines: { color: 'rgba(50, 40, 20, 0.12)' },
+              grid: { color: 'rgba(50, 40, 20, 0.08)' },
+              suggestedMin: 0,
+              suggestedMax: 25,
+              ticks: { display: false, stepSize: 5 },
+              pointLabels: {
+                font: {
+                  family: "'Noto Serif SC', serif",
+                  size: 11,
+                  weight: '600'
+                },
+                color: '#2a2621'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    /* =========================================================================
+       9. 提示通知与报告复制
+    ========================================================================= */
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.remove('hidden', 'toast-active');
+      void toast.offsetWidth;
+      toast.classList.add('toast-active');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 2700);
+    }
+
+    function copyDetailedReport() {
+      if (!finalProfile) return;
+
+      const p = finalProfile.primary;
+      const s = finalProfile.secondary;
+      const scores = finalProfile.userScores;
+      const genderLabel = selectedGender === 'F' ? '坤（女）' : '乾（男）';
+
+      const text = 
+`【千秋镜鉴 · 历史人物心智深度测评报告】
+测前校准：${genderLabel}
+契合镜像：${p.name}（契合度 ${finalProfile.matchPercentage}%）
+人格神髓：${p.archetype}
+传世真言：${p.quote}
+辅型气象：${s.name}（${s.archetype}）
+
+【五维心智得分】
+· 智略 (Strategic Foresight): ${scores.S} / 25
+· 魄力 (Drive & Assertiveness): ${scores.P} / 25
+· 仁德 (Benevolence & Empathy): ${scores.R} / 25
+· 风骨 (Integrity & Spirit): ${scores.F} / 25
+· 变通 (Resilience & Adaptability): ${scores.B} / 25
+
+【底层心智与认知】
+${p.cognitiveAnalysis}
+
+【核心天赋优势】
+${p.coreStrengths}
+
+【潜在盲区提醒】
+${p.blindspots}
+
+【现代职场与生态定位】
+${p.workplace}
+
+【修身明鉴锦囊】
+${p.advice}
+—— 千秋镜鉴，以史为镜，照见真我。`;
+
+      const tempText = document.createElement('textarea');
+      tempText.value = text;
+      tempText.style.position = 'fixed';
+      tempText.style.left = '-9999px';
+      document.body.appendChild(tempText);
+      tempText.select();
+
+      try {
+        const ok = document.execCommand('copy');
+        if (ok) {
+          showToast('已复制完整心智分析报告至剪贴板');
+        } else {
+          showToast('复制失败，请截屏保存结果');
+        }
+      } catch (err) {
+        showToast('浏览器限制复制，请截屏保存');
+      } finally {
+        document.body.removeChild(tempText);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      if (radarChart) {
+        radarChart.resize();
+      }
+    });
+  </script>
+</body>
+</html>
